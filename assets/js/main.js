@@ -37,11 +37,14 @@
   ];
 
   function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; }
+  // Collage produit : 5 vues (héro, dos, profil, dessus, intérieur)
   function galleryFor(p) {
     return [
-      { src: p.id + ".jpg",      alt: p.name + " — profil trois-quarts" },
-      { src: p.id + "-back.jpg", alt: p.name + " — vue arrière et nœud" },
-      { src: p.id + "-top.jpg",  alt: p.name + " — intérieur doublé orange brûlé" }
+      { src: p.id + "-g1.jpg", alt: p.name + " — trois-quarts",            cls: "feature" },
+      { src: p.id + "-g2.jpg", alt: p.name + " — vue arrière et nœud",     cls: "" },
+      { src: p.id + "-g3.jpg", alt: p.name + " — profil",                  cls: "" },
+      { src: p.id + "-g4.jpg", alt: p.name + " — vue de dessus",           cls: "" },
+      { src: p.id + "-g5.jpg", alt: p.name + " — intérieur doublé",        cls: "c5" }
     ];
   }
 
@@ -85,15 +88,17 @@
     });
   }
 
-  /* ---------- Lightbox ---------- */
+  /* ---------- Lightbox / vue produit ---------- */
   var lb = document.getElementById("lightbox");
-  var lbImg = document.getElementById("lb-img");
+  var lbGrid = document.getElementById("lb-grid");
+  var lbFoot = document.querySelector(".lb__foot");
   var lastFocus = null;
 
   function lbShow() {
     lb.classList.add("open");
     lb.setAttribute("aria-hidden", "false");
     document.body.style.overflow = "hidden";
+    lb.scrollTop = 0;
     document.getElementById("lb-close").focus();
   }
   function closeLightbox() {
@@ -103,52 +108,36 @@
     if (lastFocus) lastFocus.focus();
   }
 
-  // Fiche produit complète
+  // Vue produit : collage des 5 photos du coloris
   function openLightbox(p) {
     lastFocus = document.activeElement;
-    var gal = galleryFor(p);
     document.getElementById("lb-num").textContent = "N° " + p.num + " — Édition I";
     document.getElementById("lb-name").textContent = p.name;
-    document.getElementById("lb-hue").textContent = p.hue;
     document.getElementById("lb-words").textContent = p.words;
-    document.getElementById("lb-desc").textContent = p.desc;
     document.getElementById("lb-order").onclick = function () {
       closeLightbox();
       var sel = document.getElementById("f-model");
       if (sel) { for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].text.indexOf(p.name) > -1) sel.selectedIndex = i; } }
     };
-    setMain(gal[0].src, gal[0].alt);
-
-    var thumbs = document.getElementById("lb-thumbs");
-    thumbs.innerHTML = "";
-    thumbs.style.display = gal.length > 1 ? "flex" : "none";
-    gal.forEach(function (g, idx) {
-      var t = el('<button aria-label="' + g.alt + '"' + (idx === 0 ? ' aria-current="true"' : '') + '><img src="' + IMG + g.src + '" alt="" loading="lazy" /></button>');
-      t.addEventListener("click", function () {
-        setMain(g.src, g.alt);
-        thumbs.querySelectorAll("button").forEach(function (x) { x.removeAttribute("aria-current"); });
-        t.setAttribute("aria-current", "true");
-      });
-      thumbs.appendChild(t);
-    });
+    lbGrid.className = "pv-grid";
+    lbGrid.innerHTML = galleryFor(p).map(function (g) {
+      return '<figure class="cell ' + g.cls + '"><img src="' + IMG + g.src + '" alt="' + g.alt + '" loading="lazy" /></figure>';
+    }).join("");
+    if (lbFoot) lbFoot.style.display = "";
     lbShow();
   }
 
-  // Image seule (lookbook)
+  // Aperçu d'une image seule (lookbook)
   function openImage(src, alt) {
     lastFocus = document.activeElement;
     document.getElementById("lb-num").textContent = "Lookbook";
     document.getElementById("lb-name").textContent = "Collection Sahara";
-    document.getElementById("lb-hue").textContent = "";
-    document.getElementById("lb-words").textContent = "";
-    document.getElementById("lb-desc").textContent = alt;
-    document.getElementById("lb-thumbs").style.display = "none";
-    document.getElementById("lb-order").onclick = function () { closeLightbox(); };
-    setMain(src, alt);
+    document.getElementById("lb-words").textContent = alt;
+    lbGrid.className = "pv-grid single";
+    lbGrid.innerHTML = '<figure class="cell"><img src="' + IMG + src + '" alt="' + alt + '" /></figure>';
+    if (lbFoot) lbFoot.style.display = "none";
     lbShow();
   }
-
-  function setMain(src, alt) { lbImg.src = IMG + src; lbImg.alt = alt; }
 
   document.getElementById("lb-close").addEventListener("click", closeLightbox);
   lb.addEventListener("click", function (e) { if (e.target === lb) closeLightbox(); });
