@@ -5,13 +5,6 @@
   "use strict";
 
   var IMG = "assets/img/";
-  // Détails de construction communs à toute la collection
-  var SHARED = [
-    { src: "fabric.jpg",  alt: "Imprimé léopard exclusif" },
-    { src: "plate.jpg",   alt: "Plaque métallique dorée BENJ." },
-    { src: "bow.jpg",     alt: "Nœud du lien ajustable" }
-  ];
-
   var PRODUCTS = [
     { id:"sable", num:"01", name:"Sahara Sable", hue:"Léopard sable",
       words:"Élégant. Intemporel. Iconique.",
@@ -49,7 +42,7 @@
       { src: p.id + ".jpg",      alt: p.name + " — profil trois-quarts" },
       { src: p.id + "-back.jpg", alt: p.name + " — vue arrière et nœud" },
       { src: p.id + "-top.jpg",  alt: p.name + " — intérieur doublé orange brûlé" }
-    ].concat(SHARED);
+    ];
   }
 
   /* ---------- Collection ---------- */
