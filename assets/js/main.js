@@ -8,7 +8,6 @@
   // Détails de construction communs à toute la collection
   var SHARED = [
     { src: "fabric.jpg",  alt: "Imprimé léopard exclusif" },
-    { src: "lining.jpg",  alt: "Doublure orange brûlé et étiquette BENJ." },
     { src: "plate.jpg",   alt: "Plaque métallique dorée BENJ." },
     { src: "bow.jpg",     alt: "Nœud du lien ajustable" }
   ];
@@ -16,15 +15,7 @@
   var PRODUCTS = [
     { id:"sable", num:"01", name:"Sahara Sable", hue:"Léopard sable",
       words:"Élégant. Intemporel. Iconique.",
-      desc:"Le coloris fondateur. Un léopard sable sur bandeau crème, rehaussé d'une doublure orange brûlé et de la plaque dorée BENJ. La pièce iconique de la maison.",
-      gallery:[
-        { src:"sable.jpg", alt:"Sahara Sable, vue trois-quarts" },
-        { src:"front.jpg", alt:"Sahara Sable, vue de face" },
-        { src:"back.jpg",  alt:"Sahara Sable, vue arrière et nœud" },
-        { src:"top.jpg",   alt:"Sahara Sable, vue de dessus" },
-        { src:"lining.jpg",alt:"Doublure orange brûlé signée BENJ." },
-        { src:"plate.jpg", alt:"Plaque métallique dorée" }
-      ] },
+      desc:"Le coloris fondateur. Un léopard sable sur bandeau crème, rehaussé d'une doublure orange brûlé et de la plaque dorée BENJ. La pièce iconique de la maison." },
     { id:"olive", num:"02", name:"Sahara Olive", hue:"Léopard olive",
       words:"Naturel. Profond. Raffiné.",
       desc:"Un vert olive profond qui enveloppe le léopard d'une aura naturelle et raffinée. Pour une allure organique et distinguée." },
@@ -54,7 +45,11 @@
 
   function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; }
   function galleryFor(p) {
-    return (p.gallery || [{ src: p.id + ".jpg", alt: p.name }]).concat(p.gallery ? [] : SHARED);
+    return [
+      { src: p.id + ".jpg",      alt: p.name + " — profil trois-quarts" },
+      { src: p.id + "-back.jpg", alt: p.name + " — vue arrière et nœud" },
+      { src: p.id + "-top.jpg",  alt: p.name + " — intérieur doublé orange brûlé" }
+    ].concat(SHARED);
   }
 
   /* ---------- Collection ---------- */
@@ -62,7 +57,7 @@
     var grid = document.getElementById("collection-grid");
     if (!grid) return;
     PRODUCTS.forEach(function (p, i) {
-      var main = (p.gallery ? p.gallery[0].src : p.id + ".jpg");
+      var main = p.id + ".jpg";
       var card = el(
         '<button class="card reveal" style="transition-delay:' + (i * 60) + 'ms" aria-label="Voir ' + p.name + '">' +
           '<div class="card__visual">' +
