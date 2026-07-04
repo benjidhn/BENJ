@@ -98,15 +98,10 @@ figure{ margin:0; }
 .values__row span:not(:last-child)::after{ content:""; position:absolute; right:calc(-1 * clamp(.8rem,2.5vw,2.25rem)); top:50%; width:3px; height:3px; border-radius:50%; background:var(--taupe); transform:translateY(-50%); }
 
 /* ============================================================ MANIFESTE */
-.manifeste{ padding:clamp(5rem,12vh,9rem) 0; }
-.manifeste__inner{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(2rem,6vw,6rem); align-items:start; margin-bottom:clamp(4rem,8vh,6rem); }
-.manifeste__body p{ margin:0 0 1.3rem; color:var(--ink-soft); }
-.manifeste__body .lede{ color:var(--ink); font-family:var(--font-serif); font-style:italic; }
-.pillars{ display:grid; grid-template-columns:repeat(4,1fr); gap:clamp(1.6rem,3.2vw,3.2rem); }
-.pillar{ padding:2.2rem 0 0; border-top:1px solid rgba(41,35,25,.22); }
-.pillar__no{ font-family:var(--font-serif); font-style:italic; color:var(--gold); font-size:1.05rem; letter-spacing:.06em; }
-.pillar h3{ font-family:var(--font-serif); font-weight:400; font-size:1.18rem; margin:1.1rem 0 .7rem; letter-spacing:.02em; }
-.pillar p{ margin:0; font-size:.9rem; line-height:1.7; color:var(--ink-soft); font-weight:300; }
+.manifeste{ padding:clamp(6rem,15vh,11rem) 0; }
+.manifeste__inner{ max-width:60ch; margin:0 auto; text-align:center; }
+.manifeste__title{ margin:1.4rem 0 1.8rem; }
+.manifeste__line{ font-family:var(--font-serif); font-style:italic; font-weight:400; font-size:clamp(1.15rem,2vw,1.5rem); line-height:1.6; color:var(--ink-soft); margin:0; }
 
 /* ============================================================ COLLECTION */
 .collection{ padding:clamp(4rem,10vh,8rem) 0; background:var(--cream); }
