@@ -55,7 +55,7 @@
     PRODUCTS.forEach(function (p, i) {
       var main = p.id + ".jpg";
       var card = el(
-        '<button class="card reveal" style="transition-delay:' + (i * 60) + 'ms" aria-label="Voir ' + p.name + '">' +
+        '<button class="card" aria-label="Voir ' + p.name + '">' +
           '<div class="card__visual">' +
             '<span class="card__num">' + p.num + "</span>" +
             '<span class="card__view">Voir le modèle</span>' +
@@ -153,22 +153,67 @@
     els.forEach(function (e) { io.observe(e); });
   }
 
-  /* ---------- Nav ---------- */
+  /* ---------- Nav (claire sur le hero, pleine au scroll) ---------- */
   function initNav() {
     var nav = document.getElementById("nav");
     var burger = document.getElementById("burger");
     var links = document.querySelector(".nav__links");
-    var onScroll = function () { nav.classList.toggle("nav--solid", window.scrollY > 40); };
+    var hero = document.getElementById("top");
+    var onScroll = function () {
+      var past = window.scrollY > (hero ? hero.offsetHeight - 90 : 60);
+      nav.classList.toggle("nav--solid", past);
+      nav.classList.toggle("nav--over", !past && !links.classList.contains("open"));
+    };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     burger.addEventListener("click", function () {
       var open = links.classList.toggle("open");
       nav.classList.toggle("open", open);
+      if (open) nav.classList.remove("nav--over");
       burger.setAttribute("aria-expanded", String(open));
+      onScroll();
     });
     links.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", function () { links.classList.remove("open"); nav.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); });
+      a.addEventListener("click", function () { links.classList.remove("open"); nav.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); onScroll(); });
     });
+  }
+
+  /* ---------- Diaporama du hero (fondu enchaîné) ---------- */
+  function initHero() {
+    var slides = document.querySelectorAll("#hero-media .hero__slide");
+    if (slides.length < 2) return;
+    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    var i = 0;
+    setInterval(function () {
+      slides[i].classList.remove("is-active");
+      i = (i + 1) % slides.length;
+      slides[i].classList.add("is-active");
+    }, 4200);
+  }
+
+  /* ---------- Carrousel collection (flèches) ---------- */
+  function initCarousel() {
+    var track = document.getElementById("collection-grid");
+    if (!track) return;
+    var arrows = document.querySelectorAll(".carousel__arrow");
+    function step() {
+      var card = track.querySelector(".card");
+      return card ? card.offsetWidth + 24 : 300;
+    }
+    arrows.forEach(function (btn) {
+      btn.addEventListener("click", function () {
+        track.scrollBy({ left: parseInt(btn.getAttribute("data-dir"), 10) * step() * 1, behavior: "smooth" });
+      });
+    });
+    function update() {
+      var max = track.scrollWidth - track.clientWidth - 4;
+      arrows.forEach(function (b) {
+        var dir = parseInt(b.getAttribute("data-dir"), 10);
+        b.disabled = dir < 0 ? track.scrollLeft <= 4 : track.scrollLeft >= max;
+      });
+    }
+    track.addEventListener("scroll", update, { passive: true });
+    setTimeout(update, 100);
   }
 
   /* ---------- Formulaire ---------- */
@@ -196,6 +241,8 @@
     buildLookbook();
     initReveal();
     initNav();
+    initHero();
+    initCarousel();
     initForm();
   });
 })();

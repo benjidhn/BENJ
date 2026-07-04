@@ -15,14 +15,17 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=5" />
+  <link rel="stylesheet" href="assets/css/style.css?v=6" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23272219'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23c6a15b' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
 
   <!-- ░░ NAV ░░ -->
-  <header class="nav" id="nav">
+  <header class="nav nav--over" id="nav">
     <div class="nav__inner">
+      <button class="nav__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
+        <span></span><span></span>
+      </button>
       <a class="nav__brand" href="#top" aria-label="BENJ. Medical Couture — accueil">
         <span class="nav__word">BENJ.</span>
         <span class="nav__sub">Medical Couture</span>
@@ -33,38 +36,25 @@
         <a href="#savoir-faire">Savoir-faire</a>
         <a href="#lookbook">Lookbook</a>
         <a href="#ecrin">L'Écrin</a>
-        <a href="#commande" class="nav__cta">Commander</a>
+        <a href="#commande">Commander</a>
       </nav>
-      <button class="nav__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
-        <span></span><span></span>
-      </button>
     </div>
   </header>
 
   <!-- ░░ HERO ░░ -->
   <section class="hero" id="top">
-    <div class="hero__grid">
-      <div class="hero__text reveal">
-        <p class="eyebrow">Édition I — Collection Sahara</p>
-        <h1 class="hero__title">BENJ.</h1>
-        <p class="hero__tagline">Medical Couture</p>
-        <p class="hero__lede">
-          Le calot de chirurgie réinventé en pièce de couture. Là où l'habit clinique
-          devient signature — une élégance discrète, portée jusque dans la salle d'opération.
-        </p>
-        <div class="hero__actions">
-          <a href="#collection" class="btn btn--dark">Découvrir la collection</a>
-          <a href="#manifeste" class="btn btn--ghost">L'esprit de la maison</a>
-        </div>
-        <p class="hero__est">Clinique BENJ. — Est. 2024</p>
-      </div>
-
-      <figure class="hero__visual reveal">
-        <div class="hero__frame">
-          <img src="assets/img/hero.jpg" alt="Calot de chirurgie BENJ. Sahara Sable, imprimé léopard et plaque dorée" width="558" height="555" fetchpriority="high" />
-        </div>
-        <figcaption class="hero__cap-name">01 · Sahara Sable — Édition I</figcaption>
-      </figure>
+    <div class="hero__media" id="hero-media" aria-hidden="true">
+      <div class="hero__slide is-active" style="background-image:url('assets/img/sable-g1.jpg')"></div>
+      <div class="hero__slide" style="background-image:url('assets/img/terracotta-g1.jpg')"></div>
+      <div class="hero__slide" style="background-image:url('assets/img/nuit-g1.jpg')"></div>
+      <div class="hero__slide" style="background-image:url('assets/img/olive-g1.jpg')"></div>
+      <div class="hero__slide" style="background-image:url('assets/img/graphite-g1.jpg')"></div>
+    </div>
+    <div class="hero__scrim" aria-hidden="true"></div>
+    <div class="hero__inner">
+      <p class="eyebrow eyebrow--light">Édition I — Collection Sahara</p>
+      <h1 class="hero__headline">Le calot de chirurgie,<br />réinventé en couture.</h1>
+      <a href="#collection" class="link link--light">Découvrir la collection</a>
     </div>
     <div class="hero__scroll" aria-hidden="true"><span></span></div>
   </section>
@@ -119,13 +109,15 @@
         <p class="eyebrow">Édition I — Léopard</p>
         <h2 class="section-title">La Collection Sahara</h2>
         <p class="lede collection__intro">
-          Inspirée par la force et l'élégance sauvage du léopard, la collection Sahara
-          réinvente le calot médical dans des tons nobles et des matières d'exception.
           Cinq coloris, une même signature.
         </p>
+        <div class="carousel__nav" aria-hidden="true">
+          <button class="carousel__arrow" data-dir="-1" aria-label="Précédent">&larr;</button>
+          <button class="carousel__arrow" data-dir="1" aria-label="Suivant">&rarr;</button>
+        </div>
       </div>
-      <div class="grid" id="collection-grid"><!-- injecté par JS --></div>
     </div>
+    <div class="carousel" id="collection-grid"><!-- injecté par JS --></div>
   </section>
 
   <!-- ░░ SAVOIR-FAIRE ░░ -->
@@ -281,6 +273,6 @@
     </div>
   </div>
 
-  <script src="assets/js/main.js?v=5"></script>
+  <script src="assets/js/main.js?v=6"></script>
 </body>
 </html>
