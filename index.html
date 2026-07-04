@@ -15,7 +15,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=7" />
+  <link rel="stylesheet" href="assets/css/style.css?v=8" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23272219'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23c6a15b' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
@@ -33,7 +33,6 @@
       <nav class="nav__links" aria-label="Navigation principale">
         <a href="#manifeste">Manifeste</a>
         <a href="#collection">La Collection</a>
-        <a href="#ecrin">L'Écrin</a>
         <a href="#commande">Commander</a>
       </nav>
     </div>
@@ -93,10 +92,10 @@
     </div>
 
     <div class="pillars wrap">
-      <div class="pillar reveal"><span class="pillar__no">I</span><h3>Tissus d'exception</h3><p>Imprimé léopard exclusif, tissé doux et résistant, sélectionné pour tenir la journée.</p></div>
-      <div class="pillar reveal"><span class="pillar__no">II</span><h3>Confort absolu</h3><p>Maintien parfait grâce au lien ajustable. On l'oublie une fois porté.</p></div>
-      <div class="pillar reveal"><span class="pillar__no">III</span><h3>Design français</h3><p>Dessiné et pensé en France, dans l'esprit des grandes maisons.</p></div>
-      <div class="pillar reveal"><span class="pillar__no">IV</span><h3>Édition limitée</h3><p>Des séries numérotées, produites en petites quantités. Rare par nature.</p></div>
+      <div class="pillar reveal"><h3>Tissus d'exception</h3><p>Imprimé léopard exclusif, tissé doux et résistant, sélectionné pour tenir la journée.</p></div>
+      <div class="pillar reveal"><h3>Confort absolu</h3><p>Maintien parfait grâce au lien ajustable. On l'oublie une fois porté.</p></div>
+      <div class="pillar reveal"><h3>Design français</h3><p>Dessiné et pensé en France, dans l'esprit des grandes maisons.</p></div>
+      <div class="pillar reveal"><h3>Édition limitée</h3><p>Des séries numérotées, produites en petites quantités. Rare par nature.</p></div>
     </div>
   </section>
 
@@ -118,30 +117,6 @@
     <div class="carousel" id="collection-grid"><!-- injecté par JS --></div>
   </section>
 
-  <!-- ░░ L'ÉCRIN / DOUBLURE ░░ -->
-  <section class="ecrin" id="ecrin">
-    <div class="wrap ecrin__inner">
-      <figure class="ecrin__visual reveal">
-        <img src="assets/img/lining.jpg" alt="Intérieur du calot BENJ. — doublure orange brûlé et étiquette signée" loading="lazy" width="558" height="444" />
-      </figure>
-      <div class="ecrin__text reveal">
-        <p class="eyebrow">L'Écrin</p>
-        <h2 class="section-title">Offrir<br />l'exception.</h2>
-        <p class="lede">
-          Sous l'imprimé léopard se cache une doublure premium orange brûlé, signée d'une
-          étiquette BENJ. Chaque pièce est présentée dans un écrin à la hauteur du geste.
-        </p>
-        <ul class="ecrin__list">
-          <li>Écrin rigide noir, marquage doré à chaud</li>
-          <li>Doublure contrastée orange brûlé, iconique</li>
-          <li>Carte de série numérotée & certificat d'authenticité</li>
-          <li>Message personnalisé, calligraphié sur demande</li>
-        </ul>
-        <a href="#commande" class="btn btn--dark">Composer un cadeau</a>
-      </div>
-    </div>
-  </section>
-
   <!-- ░░ COMMANDE / CONTACT ░░ -->
   <section class="order" id="commande">
     <div class="wrap order__inner">
@@ -152,11 +127,6 @@
           Les pièces BENJ. sont proposées en édition limitée. Laissez-nous vos coordonnées :
           nous revenons vers vous pour composer votre commande ou votre cadeau sur mesure.
         </p>
-        <dl class="order__meta">
-          <div><dt>Écrire</dt><dd><a href="mailto:contact@benj-couture.com">contact@benj-couture.com</a></dd></div>
-          <div><dt>Maison</dt><dd>Clinique BENJ. — Paris · Est. 2024</dd></div>
-          <div><dt>Éditions</dt><dd>Séries numérotées & limitées</dd></div>
-        </dl>
       </div>
 
       <form class="order__form reveal" id="order-form" novalidate>
@@ -200,7 +170,6 @@
       <nav class="foot__nav" aria-label="Pied de page">
         <a href="#manifeste">Manifeste</a>
         <a href="#collection">Collection</a>
-        <a href="#ecrin">L'Écrin</a>
         <a href="#commande">Contact</a>
       </nav>
       <p class="foot__copy">© 2024–2026 BENJ. Medical Couture. Tous droits réservés.</p>
@@ -223,6 +192,6 @@
     </div>
   </div>
 
-  <script src="assets/js/main.js?v=7"></script>
+  <script src="assets/js/main.js?v=8"></script>
 </body>
 </html>
