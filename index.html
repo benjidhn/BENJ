@@ -3,19 +3,18 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>BENJ. — Medical Couture · Calots de chirurgie d'exception</title>
-  <meta name="description" content="BENJ. Medical Couture — Le calot de chirurgie réinventé en pièce de couture. Collection Sahara, édition limitée. Le cadeau d'exception pour les chirurgiens et professionnels de santé." />
-  <meta name="theme-color" content="#e7ddce" />
-
+  <title>BENJ. — Medical Couture</title>
+  <meta name="description" content="BENJ. Medical Couture — Le calot de chirurgie réinventé en pièce de couture. Collection Sahara, édition limitée." />
+  <meta name="theme-color" content="#1f1b14" />
   <meta property="og:title" content="BENJ. — Medical Couture" />
   <meta property="og:description" content="Le calot de chirurgie réinventé en pièce de couture. Collection Sahara — édition limitée." />
   <meta property="og:type" content="website" />
-  <meta property="og:image" content="assets/img/hero.jpg" />
+  <meta property="og:image" content="assets/img/sable-g1.jpg" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=10" />
+  <link rel="stylesheet" href="assets/css/style.css?v=11" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23272219'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23c6a15b' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
@@ -23,20 +22,24 @@
   <!-- ░░ NAV ░░ -->
   <header class="nav nav--over" id="nav">
     <div class="nav__inner">
-      <button class="nav__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false">
-        <span></span><span></span>
-      </button>
-      <a class="nav__brand" href="#top" aria-label="BENJ. Medical Couture — accueil">
+      <button class="nav__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+      <a class="nav__brand" href="index.html" aria-label="BENJ. Medical Couture — accueil">
         <span class="nav__word">BENJ.</span>
         <span class="nav__sub">Medical Couture</span>
       </a>
-      <nav class="nav__links" aria-label="Navigation principale">
-        <a href="#maison">La Maison</a>
-        <a href="#collection">La Collection</a>
-        <a href="#commande">Commander</a>
-      </nav>
+      <span class="nav__spacer" aria-hidden="true"></span>
     </div>
   </header>
+
+  <!-- ░░ MENU PLEIN ÉCRAN ░░ -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <nav class="menu__nav" aria-label="Menu">
+      <a href="index.html">Accueil</a>
+      <a href="maison.html">La Maison</a>
+      <a href="index.html#collection">La Collection</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
 
   <!-- ░░ HERO ░░ -->
   <section class="hero" id="top">
@@ -49,30 +52,10 @@
     </div>
     <div class="hero__scrim" aria-hidden="true"></div>
     <div class="hero__inner">
-      <p class="eyebrow eyebrow--light">Édition I — Collection Sahara</p>
-      <h1 class="hero__headline">Le calot de chirurgie,<br />réinventé en couture.</h1>
+      <p class="eyebrow eyebrow--light">Collection Sahara — Édition I</p>
       <a href="#collection" class="link link--light">Découvrir la collection</a>
     </div>
     <div class="hero__scroll" aria-hidden="true"><span></span></div>
-  </section>
-
-  <!-- ░░ VALEURS ░░ -->
-  <div class="values">
-    <div class="wrap values__row">
-      <span>Tissus d'exception</span>
-      <span>Confort absolu</span>
-      <span>Design français</span>
-      <span>Édition limitée</span>
-    </div>
-  </div>
-
-  <!-- ░░ LA MAISON ░░ -->
-  <section class="manifeste" id="maison">
-    <div class="wrap manifeste__inner reveal">
-      <p class="eyebrow">La Maison</p>
-      <h2 class="section-title manifeste__title">L'alliance du style<br />et de l'exigence.</h2>
-      <p class="manifeste__line">Le calot médical, pensé comme une pièce de couture.</p>
-    </div>
   </section>
 
   <!-- ░░ COLLECTION ░░ -->
@@ -81,9 +64,6 @@
       <div class="collection__head reveal">
         <p class="eyebrow">Édition I — Léopard</p>
         <h2 class="section-title">La Collection Sahara</h2>
-        <p class="lede collection__intro">
-          Cinq coloris, une même signature.
-        </p>
         <div class="carousel__nav" aria-hidden="true">
           <button class="carousel__arrow" data-dir="-1" aria-label="Précédent">&larr;</button>
           <button class="carousel__arrow" data-dir="1" aria-label="Suivant">&rarr;</button>
@@ -91,47 +71,6 @@
       </div>
     </div>
     <div class="carousel" id="collection-grid"><!-- injecté par JS --></div>
-  </section>
-
-  <!-- ░░ COMMANDE / CONTACT ░░ -->
-  <section class="order" id="commande">
-    <div class="wrap order__inner">
-      <div class="order__intro reveal">
-        <p class="eyebrow">Sur rendez-vous</p>
-        <h2 class="section-title">Prendre contact.</h2>
-        <p class="lede">
-          Édition limitée. Laissez-nous vos coordonnées, nous revenons vers vous.
-        </p>
-      </div>
-
-      <form class="order__form reveal" id="order-form" novalidate>
-        <div class="field">
-          <label for="f-name">Nom</label>
-          <input id="f-name" name="name" type="text" autocomplete="name" required />
-        </div>
-        <div class="field">
-          <label for="f-email">Email</label>
-          <input id="f-email" name="email" type="email" autocomplete="email" required />
-        </div>
-        <div class="field field--full">
-          <label for="f-model">Modèle souhaité</label>
-          <select id="f-model" name="model">
-            <option value="">Sans préférence</option>
-            <option>01 · Sahara Sable — Léopard sable</option>
-            <option>02 · Sahara Olive — Léopard olive</option>
-            <option>03 · Sahara Nuit — Léopard nocturne</option>
-            <option>04 · Sahara Terracotta — Léopard brun</option>
-            <option>05 · Sahara Graphite — Léopard cendré</option>
-          </select>
-        </div>
-        <div class="field field--full">
-          <label for="f-msg">Votre message</label>
-          <textarea id="f-msg" name="message" rows="4" placeholder="Un cadeau, une gravure, une occasion particulière…"></textarea>
-        </div>
-        <button type="submit" class="btn btn--dark btn--block">Envoyer la demande</button>
-        <p class="order__note" id="order-note" role="status" aria-live="polite"></p>
-      </form>
-    </div>
   </section>
 
   <!-- ░░ FOOTER ░░ -->
@@ -143,9 +82,9 @@
       </div>
       <p class="foot__line">L'alliance du style et de l'exigence.</p>
       <nav class="foot__nav" aria-label="Pied de page">
-        <a href="#maison">La Maison</a>
-        <a href="#collection">Collection</a>
-        <a href="#commande">Contact</a>
+        <a href="index.html">Accueil</a>
+        <a href="maison.html">La Maison</a>
+        <a href="contact.html">Contact</a>
       </nav>
       <p class="foot__copy">© 2024–2026 BENJ. Medical Couture. Tous droits réservés.</p>
     </div>
@@ -162,11 +101,11 @@
       </header>
       <div class="pv-grid" id="lb-grid"><!-- injecté par JS --></div>
       <footer class="lb__foot">
-        <a href="#commande" class="btn btn--dark btn--block" id="lb-order">Commander ce modèle</a>
+        <a href="contact.html" class="btn btn--dark btn--block" id="lb-order">Commander ce modèle</a>
       </footer>
     </div>
   </div>
 
-  <script src="assets/js/main.js?v=10"></script>
+  <script src="assets/js/main.js?v=11"></script>
 </body>
 </html>

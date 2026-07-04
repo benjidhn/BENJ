@@ -114,11 +114,8 @@
     document.getElementById("lb-num").textContent = "N° " + p.num + " — Édition I";
     document.getElementById("lb-name").textContent = p.name;
     document.getElementById("lb-words").textContent = p.words;
-    document.getElementById("lb-order").onclick = function () {
-      closeLightbox();
-      var sel = document.getElementById("f-model");
-      if (sel) { for (var i = 0; i < sel.options.length; i++) { if (sel.options[i].text.indexOf(p.name) > -1) sel.selectedIndex = i; } }
-    };
+    var lbOrder = document.getElementById("lb-order");
+    if (lbOrder) lbOrder.href = "contact.html?modele=" + encodeURIComponent(p.name);
     lbGrid.className = "pv-grid";
     lbGrid.innerHTML = galleryFor(p).map(function (g) {
       return '<figure class="cell ' + g.cls + '"><img src="' + IMG + g.src + '" alt="' + g.alt + '" loading="lazy" /></figure>';
@@ -139,9 +136,11 @@
     lbShow();
   }
 
-  document.getElementById("lb-close").addEventListener("click", closeLightbox);
-  lb.addEventListener("click", function (e) { if (e.target === lb) closeLightbox(); });
-  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && lb.classList.contains("open")) closeLightbox(); });
+  if (lb) {
+    document.getElementById("lb-close").addEventListener("click", closeLightbox);
+    lb.addEventListener("click", function (e) { if (e.target === lb) closeLightbox(); });
+    document.addEventListener("keydown", function (e) { if (e.key === "Escape" && lb.classList.contains("open")) closeLightbox(); });
+  }
 
   /* ---------- Révélation au scroll ---------- */
   function initReveal() {
@@ -153,29 +152,53 @@
     els.forEach(function (e) { io.observe(e); });
   }
 
-  /* ---------- Nav (claire sur le hero, pleine au scroll) ---------- */
+  /* ---------- Nav + menu plein écran ---------- */
   function initNav() {
     var nav = document.getElementById("nav");
     var burger = document.getElementById("burger");
-    var links = document.querySelector(".nav__links");
-    var hero = document.getElementById("top");
+    var menu = document.getElementById("menu");
+    if (!nav || !burger) return;
+    var overCapable = nav.classList.contains("nav--over");
+
     var onScroll = function () {
-      var past = window.scrollY > (hero ? hero.offsetHeight - 90 : 60);
+      if (!overCapable) return;
+      if (menu && menu.classList.contains("open")) return;
+      var past = window.scrollY > (window.innerHeight - 90);
       nav.classList.toggle("nav--solid", past);
-      nav.classList.toggle("nav--over", !past && !links.classList.contains("open"));
+      nav.classList.toggle("nav--over", !past);
     };
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    burger.addEventListener("click", function () {
-      var open = links.classList.toggle("open");
-      nav.classList.toggle("open", open);
-      if (open) nav.classList.remove("nav--over");
+
+    function setMenu(open) {
+      if (menu) menu.classList.toggle("open", open);
+      nav.classList.toggle("is-menu-open", open);
       burger.setAttribute("aria-expanded", String(open));
-      onScroll();
+      document.body.style.overflow = open ? "hidden" : "";
+      if (!open) onScroll();
+    }
+    burger.addEventListener("click", function () {
+      setMenu(!(menu && menu.classList.contains("open")));
     });
-    links.querySelectorAll("a").forEach(function (a) {
-      a.addEventListener("click", function () { links.classList.remove("open"); nav.classList.remove("open"); burger.setAttribute("aria-expanded", "false"); onScroll(); });
-    });
+    if (menu) {
+      menu.querySelectorAll("a").forEach(function (a) {
+        a.addEventListener("click", function () { setMenu(false); });
+      });
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape" && menu.classList.contains("open")) setMenu(false);
+      });
+    }
+  }
+
+  /* ---------- Pré-remplir le modèle (page contact) ---------- */
+  function initModelParam() {
+    var sel = document.getElementById("f-model");
+    if (!sel) return;
+    var m = new URLSearchParams(location.search).get("modele");
+    if (!m) return;
+    for (var i = 0; i < sel.options.length; i++) {
+      if (sel.options[i].text.indexOf(m) > -1) { sel.selectedIndex = i; break; }
+    }
   }
 
   /* ---------- Diaporama du hero (fondu enchaîné) ---------- */
@@ -244,5 +267,6 @@
     initHero();
     initCarousel();
     initForm();
+    initModelParam();
   });
 })();
