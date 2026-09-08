@@ -9,8 +9,8 @@
    "", le site affiche un message d'attente au lieu de rediriger
    vers un paiement qui n'existe pas encore.
    ------------------------------------------------------------ */
-var STRIPE_PAYMENT_LINK = ""; // ex : "https://buy.stripe.com/xxxxxxxxxxxx"
-var OWNER_EMAIL = "commandes@benj-medicalcouture.fr"; // ⚠️ à remplacer par votre vraie adresse
+var STRIPE_PAYMENT_LINK = "https://buy.stripe.com/test_fZu5kF1N1cQR5cA1wx9bO00"; // ⚠️ lien de TEST — à remplacer par le lien du compte de production avant un vrai lancement
+var OWNER_EMAIL = "benji.dhn@gmail.com";
 
 (function () {
   "use strict";
