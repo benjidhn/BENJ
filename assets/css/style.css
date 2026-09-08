@@ -146,7 +146,6 @@ figure{ margin:0; }
 .card__name::after{ content:""; position:absolute; left:50%; right:50%; bottom:-.35rem; height:1px; background:var(--gold); transition:left .5s var(--ease), right .5s var(--ease); }
 .card:hover .card__name::after{ left:0; right:0; }
 .card__hue{ font-size:.62rem; letter-spacing:.32em; text-transform:uppercase; color:var(--label); margin:.9rem 0 0; }
-.card__price{ font-family:var(--font-serif); font-size:.92rem; color:var(--gold); margin:.5rem 0 0; }
 .card__words{ display:none; }
 
 /* ============================================================ SAVOIR-FAIRE */
@@ -282,7 +281,7 @@ figure{ margin:0; }
   .pv-grid.single .cell{ aspect-ratio:auto; height:min(64vh,620px); }
 }
 .lb__foot{ padding:clamp(1.4rem,3vw,2rem) clamp(1.2rem,3vw,2.4rem) clamp(1.6rem,3.5vw,2.6rem); text-align:center; }
-.lb__price{ font-family:var(--font-serif); font-size:1.4rem; color:var(--gold); margin:0 0 1.2rem; }
+.lb__price{ font-family:var(--font-serif); font-size:1.4rem; color:var(--ink); margin:0 0 1.2rem; }
 .lb__buy{ display:flex; align-items:stretch; justify-content:center; gap:.9rem; flex-wrap:wrap; }
 .qty__group{ display:inline-flex; align-items:stretch; border:1px solid var(--line); }
 .qty__btn{ width:2.6rem; background:none; border:0; color:var(--ink); font-size:1.1rem; cursor:pointer; transition:background .3s var(--ease); }

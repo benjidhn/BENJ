@@ -53,7 +53,6 @@
           '<div class="card__body">' +
             '<h3 class="card__name">' + p.name + "</h3>" +
             '<p class="card__hue">' + p.hue + "</p>" +
-            '<p class="card__price">' + window.BENJ_formatPrice(p.price) + "</p>" +
             '<p class="card__words">' + p.words + "</p>" +
           "</div>" +
         "</button>"
