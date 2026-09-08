@@ -60,6 +60,16 @@
     <div class="hero__scroll" aria-hidden="true"><span></span></div>
   </section>
 
+  <!-- ░░ VALEURS ░░ -->
+  <section class="values">
+    <div class="wrap values__row">
+      <span>Édition limitée</span>
+      <span>Confectionné pièce par pièce</span>
+      <span>Doublure signature</span>
+      <span>Livraison soignée en France</span>
+    </div>
+  </section>
+
   <!-- ░░ COLLECTION ░░ -->
   <section class="collection" id="collection">
     <div class="wrap">
@@ -73,6 +83,62 @@
       </div>
     </div>
     <div class="carousel" id="collection-grid"><!-- injecté par JS --></div>
+  </section>
+
+  <!-- ░░ SAVOIR-FAIRE ░░ -->
+  <section class="craft" id="savoir-faire">
+    <div class="wrap craft__inner">
+      <div class="craft__lead reveal">
+        <p class="eyebrow">Le savoir-faire</p>
+        <h2 class="section-title">La matière avant tout.</h2>
+        <p>Chaque calot BENJ. est coupé, doublé et fini à la main, avec le même soin porté aux étoffes que dans la haute couture — jamais comme un simple accessoire médical.</p>
+        <p class="craft__signature">B<span>.</span></p>
+      </div>
+      <div class="craft__grid" id="craft-grid"><!-- injecté par JS --></div>
+    </div>
+  </section>
+
+  <!-- ░░ LOOKBOOK ░░ -->
+  <section class="lookbook" id="lookbook">
+    <div class="wrap lookbook__head reveal">
+      <p class="eyebrow">Lookbook</p>
+      <h2 class="section-title">Dans le détail.</h2>
+      <p class="lede">Matière, finitions, silhouette — un collage qui raconte la pièce.</p>
+    </div>
+    <div class="wrap">
+      <div class="lookbook__grid" id="lookbook-grid"><!-- injecté par JS --></div>
+    </div>
+  </section>
+
+  <!-- ░░ LA MAISON (extrait) ░░ -->
+  <section class="manifeste">
+    <div class="wrap manifeste__inner reveal">
+      <p class="eyebrow">La Maison</p>
+      <h2 class="section-title manifeste__title">Une couture pensée<br />pour le bloc opératoire.</h2>
+      <p class="manifeste__line">« On ne coud pas un calot. On habille un geste. »</p>
+      <a href="maison.html" class="link link--lg" style="margin-top:2.2rem;display:inline-block;">Découvrir la Maison</a>
+    </div>
+  </section>
+
+  <!-- ░░ ÉCRIN ░░ -->
+  <section class="ecrin" id="ecrin">
+    <div class="wrap ecrin__inner">
+      <figure class="ecrin__visual reveal">
+        <img src="assets/img/hero.jpg" alt="Calot BENJ. Sahara Sable, présentation trois-quarts" loading="lazy" />
+      </figure>
+      <div class="ecrin__text reveal">
+        <p class="eyebrow">L'écrin</p>
+        <h2 class="section-title">Reçu comme un bijou.</h2>
+        <p class="lede">Chaque pièce voyage dans son écrin signature, prête à être offerte — à soi, ou à celui qui opère avec style.</p>
+        <ul class="ecrin__list">
+          <li>Boîte rigide floquée, ruban satin</li>
+          <li>Pochon de protection en coton</li>
+          <li>Carte d'authenticité et numéro d'édition</li>
+          <li>Livraison suivie et soignée</li>
+        </ul>
+        <a href="#collection" class="btn btn--dark">Découvrir la collection</a>
+      </div>
+    </div>
   </section>
 
   <!-- ░░ FOOTER ░░ -->
@@ -113,6 +179,11 @@
           <button type="button" class="btn btn--dark" id="lb-add">Ajouter au panier</button>
         </div>
         <p class="lb__added" id="lb-added" role="status" aria-live="polite"></p>
+        <dl class="lb__specs">
+          <div><dt>Édition</dt><dd id="lb-edition"></dd></div>
+          <div><dt>Matière</dt><dd id="lb-material"></dd></div>
+          <div><dt>Entretien</dt><dd id="lb-care"></dd></div>
+        </dl>
         <a href="contact.html" class="link" id="lb-order">Une demande particulière ? Nous contacter</a>
       </footer>
     </div>

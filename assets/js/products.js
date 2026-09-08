@@ -9,6 +9,11 @@
 
   window.BENJ_CURRENCY = "€";
 
+  // Fiche produit — informations communes à toute la collection
+  window.BENJ_EDITION = "Édition limitée à 150 exemplaires par coloris — numérotée à la main par l'atelier avant expédition.";
+  window.BENJ_MATERIAL = "65 % coton, 35 % polyester. Impression léopard exclusive, doublure intérieure teintée, plaque métallique dorée cousue main.";
+  window.BENJ_CARE = "Lavage en machine à 60°C (cycle médical), sans adoucissant. Repassage doux sur l'envers. Ne pas javelliser.";
+
   window.BENJ_PRODUCTS = [
     { id:"sable", num:"01", name:"Sahara Sable", hue:"Léopard sable",
       words:"Élégant. Intemporel. Iconique.", price:50,

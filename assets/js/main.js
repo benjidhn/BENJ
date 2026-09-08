@@ -9,15 +9,20 @@
 
   // Grille lookbook : image + classe de mise en page (masonry)
   var LOOKBOOK = [
-    { src:"hero.jpg",  alt:"Sahara Sable, trois-quarts",       cls:"big" },
-    { src:"front.jpg", alt:"Sahara Sable, face",               cls:"" },
+    { src:"front.jpg", alt:"Sahara Sable, face",               cls:"big" },
     { src:"back.jpg",  alt:"Sahara Sable, dos et nœud",        cls:"tall" },
-    { src:"fabric.jpg",alt:"Détail de l'imprimé léopard",      cls:"" },
-    { src:"plate.jpg", alt:"Plaque dorée BENJ.",               cls:"" },
     { src:"top.jpg",   alt:"Sahara Sable, dessus",             cls:"wide" },
-    { src:"lining.jpg",alt:"Doublure orange brûlé",            cls:"wide" },
+    { src:"lining.jpg",alt:"Doublure intérieure",              cls:"wide" },
     { src:"bow.jpg",   alt:"Nœud du lien ajustable",           cls:"" },
     { src:"tag.jpg",   alt:"Étiquette métallique BENJ.",       cls:"" }
+  ];
+
+  // Grille savoir-faire : gros plans commentés de la confection
+  var CRAFT = [
+    { src:"fabric.jpg", alt:"Détail de l'imprimé léopard", title:"L'imprimé",
+      desc:"Un motif léopard dessiné maison, imprimé en petite série sur un coton doux et résistant." },
+    { src:"plate.jpg", alt:"Plaque dorée BENJ.", title:"La plaque dorée",
+      desc:"Gravée puis cousue main, elle signe chaque pièce comme un bijou de couture." }
   ];
 
   function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; }
@@ -73,6 +78,23 @@
     });
   }
 
+  /* ---------- Savoir-faire ---------- */
+  function buildCraft() {
+    var grid = document.getElementById("craft-grid");
+    if (!grid) return;
+    CRAFT.forEach(function (item, i) {
+      var card = el(
+        '<button class="craft__card reveal" style="transition-delay:' + (i * 80) + 'ms" aria-label="Agrandir : ' + item.alt + '">' +
+          '<span class="craft__ph"><img src="' + IMG + item.src + '" alt="' + item.alt + '" loading="lazy" /></span>' +
+          "<h3>" + item.title + "</h3>" +
+          "<p>" + item.desc + "</p>" +
+        "</button>"
+      );
+      card.addEventListener("click", function () { openImage(item.src, item.alt); });
+      grid.appendChild(card);
+    });
+  }
+
   /* ---------- Lightbox / vue produit ---------- */
   var lb = document.getElementById("lightbox");
   var lbGrid = document.getElementById("lb-grid");
@@ -107,6 +129,12 @@
     var lbAdded = document.getElementById("lb-added");
     if (lbQty) lbQty.value = "1";
     if (lbAdded) lbAdded.textContent = "";
+    var lbEdition = document.getElementById("lb-edition");
+    var lbMaterial = document.getElementById("lb-material");
+    var lbCare = document.getElementById("lb-care");
+    if (lbEdition) lbEdition.textContent = window.BENJ_EDITION || "";
+    if (lbMaterial) lbMaterial.textContent = window.BENJ_MATERIAL || "";
+    if (lbCare) lbCare.textContent = window.BENJ_CARE || "";
     lbGrid.className = "pv-grid";
     lbGrid.innerHTML = galleryFor(p).map(function (g) {
       return '<figure class="cell ' + g.cls + '"><img src="' + IMG + g.src + '" alt="' + g.alt + '" loading="lazy" /></figure>';
@@ -274,6 +302,7 @@
 
   document.addEventListener("DOMContentLoaded", function () {
     buildCollection();
+    buildCraft();
     buildLookbook();
     initReveal();
     initNav();

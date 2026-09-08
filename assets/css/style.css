@@ -156,7 +156,8 @@ figure{ margin:0; }
 .craft__signature{ font-family:var(--font-serif); font-style:italic; font-size:4rem; color:var(--gold); margin:2rem 0 0; line-height:1; }
 .craft__signature span{ color:var(--terra); }
 .craft__grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(1.2rem,2.5vw,2rem); }
-.craft__card{ background:none; border:0; padding:0; }
+.craft__card{ background:none; border:0; padding:0; cursor:pointer; text-align:left; font:inherit; color:inherit; }
+.craft__card:focus-visible{ outline:1px solid var(--gold); outline-offset:6px; }
 .craft__ph{ aspect-ratio:4/3; margin-bottom:1.2rem; overflow:hidden; background:var(--sand-deep); }
 .craft__ph img{ width:100%; height:100%; object-fit:cover; transition:transform 1.4s var(--ease); }
 .craft__card:hover .craft__ph img{ transform:scale(1.04); }
@@ -290,7 +291,11 @@ figure{ margin:0; }
 .qty__val:focus{ outline:none; }
 .lb__buy .btn{ padding:1.15rem 2.2rem; }
 .lb__added{ min-height:1.2em; font-size:.82rem; color:var(--gold); margin:1rem 0 0; }
-.lb__foot #lb-order{ display:inline-block; margin-top:1.2rem; }
+.lb__specs{ text-align:left; max-width:34rem; margin:1.8rem auto 0; padding-top:1.4rem; border-top:1px solid var(--line); display:grid; gap:.7rem; }
+.lb__specs div{ display:flex; gap:1.2rem; }
+.lb__specs dt{ flex:0 0 6rem; font-size:.6rem; letter-spacing:.22em; text-transform:uppercase; color:var(--gold); padding-top:.15rem; }
+.lb__specs dd{ margin:0; font-size:.86rem; line-height:1.65; color:var(--ink-soft); }
+.lb__foot #lb-order{ display:inline-block; margin-top:1.4rem; }
 
 /* ============================================================ REVEAL */
 .reveal{ opacity:0; transform:translateY(28px); transition:opacity 1s var(--ease), transform 1s var(--ease); }
@@ -316,6 +321,8 @@ section[id]{ scroll-margin-top:88px; }
   .cart-row__total{ grid-area:total; text-align:left; }
   .cart-row__remove{ position:absolute; top:1.4rem; right:0; }
   .cart-row{ position:relative; }
+  .lb__specs div{ flex-direction:column; gap:.25rem; }
+  .lb__specs dt{ flex:none; }
 }
 /* Première section des pages internes : espace sous la nav fixe */
 .subpage-first{ padding-top:clamp(9rem,17vh,12rem) !important; }
