@@ -13,16 +13,13 @@
     { src:"back.jpg",  alt:"Sahara Sable, dos et nœud",        cls:"tall" },
     { src:"top.jpg",   alt:"Sahara Sable, dessus",             cls:"wide" },
     { src:"lining.jpg",alt:"Doublure intérieure",              cls:"wide" },
-    { src:"bow.jpg",   alt:"Nœud du lien ajustable",           cls:"" },
-    { src:"tag.jpg",   alt:"Étiquette métallique BENJ.",       cls:"" }
+    { src:"bow.jpg",   alt:"Nœud du lien ajustable",           cls:"" }
   ];
 
   // Grille savoir-faire : gros plans commentés de la confection
   var CRAFT = [
     { src:"fabric.jpg", alt:"Détail de l'imprimé léopard", title:"L'imprimé",
-      desc:"Un motif léopard dessiné maison, imprimé en petite série sur un coton doux et résistant." },
-    { src:"plate.jpg", alt:"Plaque dorée BENJ.", title:"La plaque dorée",
-      desc:"Gravée puis cousue main, elle signe chaque pièce comme un bijou de couture." }
+      desc:"Un motif léopard dessiné maison, imprimé en petite série sur un coton doux et résistant." }
   ];
 
   function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; }
@@ -81,6 +78,7 @@
   function buildCraft() {
     var grid = document.getElementById("craft-grid");
     if (!grid) return;
+    grid.classList.toggle("craft__grid--single", CRAFT.length === 1);
     CRAFT.forEach(function (item, i) {
       var card = el(
         '<button class="craft__card reveal" style="transition-delay:' + (i * 80) + 'ms" aria-label="Agrandir : ' + item.alt + '">' +

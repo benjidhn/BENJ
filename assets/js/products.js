@@ -11,13 +11,13 @@
 
   // Fiche produit — informations communes à toute la collection
   window.BENJ_EDITION = "Édition limitée.";
-  window.BENJ_MATERIAL = "65 % coton, 35 % polyester. Impression léopard exclusive, doublure intérieure teintée, plaque métallique dorée cousue main.";
+  window.BENJ_MATERIAL = "65 % coton, 35 % polyester. Impression léopard exclusive, doublure intérieure teintée, monogramme B. brodé fil doré.";
   window.BENJ_CARE = "Lavage en machine à 60°C (cycle médical), sans adoucissant. Repassage doux sur l'envers. Ne pas javelliser.";
 
   window.BENJ_PRODUCTS = [
     { id:"sable", num:"01", name:"Sahara Sable", hue:"Léopard sable",
       words:"Élégant. Intemporel. Iconique.", price:50,
-      desc:"Le coloris fondateur. Un léopard sable sur bandeau crème, rehaussé d'une doublure orange brûlé et de la plaque dorée BENJ. La pièce iconique de la maison." },
+      desc:"Le coloris fondateur. Un léopard sable sur bandeau crème, rehaussé d'une doublure orange brûlé et du monogramme B. brodé. La pièce iconique de la maison." },
     { id:"olive", num:"02", name:"Sahara Olive", hue:"Léopard olive",
       words:"Naturel. Profond. Raffiné.", price:50,
       desc:"Un vert olive profond qui enveloppe le léopard d'une aura naturelle et raffinée. Pour une allure organique et distinguée." },

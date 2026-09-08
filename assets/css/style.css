@@ -156,6 +156,7 @@ figure{ margin:0; }
 .craft__signature{ font-family:var(--font-serif); font-style:italic; font-size:4rem; color:var(--gold); margin:2rem 0 0; line-height:1; }
 .craft__signature span{ color:var(--terra); }
 .craft__grid{ display:grid; grid-template-columns:1fr 1fr; gap:clamp(1.2rem,2.5vw,2rem); }
+.craft__grid--single{ grid-template-columns:1fr; max-width:26rem; }
 .craft__card{ background:none; border:0; padding:0; cursor:pointer; text-align:left; font:inherit; color:inherit; }
 .craft__card:focus-visible{ outline:1px solid var(--gold); outline-offset:6px; }
 .craft__ph{ aspect-ratio:4/3; margin-bottom:1.2rem; overflow:hidden; background:var(--sand-deep); }
