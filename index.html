@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=11" />
+  <link rel="stylesheet" href="assets/css/style.css?v=12" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23272219'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23c6a15b' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
@@ -27,7 +27,10 @@
         <span class="nav__word">BENJ.</span>
         <span class="nav__sub">Medical Couture</span>
       </a>
-      <span class="nav__spacer" aria-hidden="true"></span>
+      <a class="nav__cart" href="panier.html" aria-label="Voir le panier">
+        <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 7h16l-1.4 11.2a2 2 0 0 1-2 1.8H7.4a2 2 0 0 1-2-1.8L4 7Z"/><path d="M8 7V6a4 4 0 0 1 8 0v1"/></svg>
+        <span class="nav__cart-count" id="cart-count" hidden>0</span>
+      </a>
     </div>
   </header>
 
@@ -37,6 +40,7 @@
       <a href="index.html">Accueil</a>
       <a href="maison.html">La Maison</a>
       <a href="index.html#collection">La Collection</a>
+      <a href="panier.html">Panier</a>
       <a href="contact.html">Contact</a>
     </nav>
   </div>
@@ -45,10 +49,8 @@
   <section class="hero" id="top">
     <div class="hero__media" id="hero-media" aria-hidden="true">
       <div class="hero__slide is-active" style="background-image:url('assets/img/sable-g1.jpg')"></div>
-      <div class="hero__slide" style="background-image:url('assets/img/terracotta-g1.jpg')"></div>
       <div class="hero__slide" style="background-image:url('assets/img/nuit-g1.jpg')"></div>
       <div class="hero__slide" style="background-image:url('assets/img/olive-g1.jpg')"></div>
-      <div class="hero__slide" style="background-image:url('assets/img/graphite-g1.jpg')"></div>
     </div>
     <div class="hero__scrim" aria-hidden="true"></div>
     <div class="hero__inner">
@@ -101,11 +103,23 @@
       </header>
       <div class="pv-grid" id="lb-grid"><!-- injecté par JS --></div>
       <footer class="lb__foot">
-        <a href="contact.html" class="btn btn--dark btn--block" id="lb-order">Commander ce modèle</a>
+        <p class="lb__price" id="lb-price"></p>
+        <div class="lb__buy">
+          <div class="qty__group">
+            <button type="button" class="qty__btn" id="lb-qty-dec" aria-label="Retirer une unité">&minus;</button>
+            <input type="text" inputmode="numeric" id="lb-qty" class="qty__val" value="1" aria-label="Quantité" />
+            <button type="button" class="qty__btn" id="lb-qty-inc" aria-label="Ajouter une unité">+</button>
+          </div>
+          <button type="button" class="btn btn--dark" id="lb-add">Ajouter au panier</button>
+        </div>
+        <p class="lb__added" id="lb-added" role="status" aria-live="polite"></p>
+        <a href="contact.html" class="link" id="lb-order">Une demande particulière ? Nous contacter</a>
       </footer>
     </div>
   </div>
 
-  <script src="assets/js/main.js?v=11"></script>
+  <script src="assets/js/products.js?v=1"></script>
+  <script src="assets/js/cart.js?v=1"></script>
+  <script src="assets/js/main.js?v=12"></script>
 </body>
 </html>

@@ -5,23 +5,7 @@
   "use strict";
 
   var IMG = "assets/img/";
-  var PRODUCTS = [
-    { id:"sable", num:"01", name:"Sahara Sable", hue:"Léopard sable",
-      words:"Élégant. Intemporel. Iconique.",
-      desc:"Le coloris fondateur. Un léopard sable sur bandeau crème, rehaussé d'une doublure orange brûlé et de la plaque dorée BENJ. La pièce iconique de la maison." },
-    { id:"olive", num:"02", name:"Sahara Olive", hue:"Léopard olive",
-      words:"Naturel. Profond. Raffiné.",
-      desc:"Un vert olive profond qui enveloppe le léopard d'une aura naturelle et raffinée. Pour une allure organique et distinguée." },
-    { id:"nuit", num:"03", name:"Sahara Nuit", hue:"Léopard nocturne",
-      words:"Discret. Puissant. Sophistiqué.",
-      desc:"Le noir absolu, tendu sur un léopard nocturne. La sophistication à l'état pur — discret, puissant, intemporel." },
-    { id:"terracotta", num:"04", name:"Sahara Terracotta", hue:"Léopard brun",
-      words:"Chaleureux. Intense. Unique.",
-      desc:"Une terre cuite chaleureuse et intense, écho à la doublure iconique de la maison. Un caractère affirmé, unique." },
-    { id:"graphite", num:"05", name:"Sahara Graphite", hue:"Léopard cendré",
-      words:"Moderne. Élégant. Urbain.",
-      desc:"Un gris graphite contemporain, urbain et élégant. Le léopard cendré, réinventé pour aujourd'hui." }
-  ];
+  var PRODUCTS = window.BENJ_PRODUCTS || [];
 
   // Grille lookbook : image + classe de mise en page (masonry)
   var LOOKBOOK = [
@@ -64,6 +48,7 @@
           '<div class="card__body">' +
             '<h3 class="card__name">' + p.name + "</h3>" +
             '<p class="card__hue">' + p.hue + "</p>" +
+            '<p class="card__price">' + window.BENJ_formatPrice(p.price) + "</p>" +
             '<p class="card__words">' + p.words + "</p>" +
           "</div>" +
         "</button>"
@@ -116,11 +101,25 @@
     document.getElementById("lb-words").textContent = p.words;
     var lbOrder = document.getElementById("lb-order");
     if (lbOrder) lbOrder.href = "contact.html?modele=" + encodeURIComponent(p.name);
+    var lbPrice = document.getElementById("lb-price");
+    if (lbPrice) lbPrice.textContent = window.BENJ_formatPrice(p.price);
+    var lbQty = document.getElementById("lb-qty");
+    var lbAdded = document.getElementById("lb-added");
+    if (lbQty) lbQty.value = "1";
+    if (lbAdded) lbAdded.textContent = "";
     lbGrid.className = "pv-grid";
     lbGrid.innerHTML = galleryFor(p).map(function (g) {
       return '<figure class="cell ' + g.cls + '"><img src="' + IMG + g.src + '" alt="' + g.alt + '" loading="lazy" /></figure>';
     }).join("");
     if (lbFoot) lbFoot.style.display = "";
+    var lbAdd = document.getElementById("lb-add");
+    if (lbAdd) {
+      lbAdd.onclick = function () {
+        var qty = parseInt((lbQty && lbQty.value) || "1", 10) || 1;
+        window.BENJ_Cart.add(p.id, qty);
+        if (lbAdded) lbAdded.textContent = qty + " × " + p.name + " ajouté" + (qty > 1 ? "s" : "") + " au panier.";
+      };
+    }
     lbShow();
   }
 
@@ -140,6 +139,20 @@
     document.getElementById("lb-close").addEventListener("click", closeLightbox);
     lb.addEventListener("click", function (e) { if (e.target === lb) closeLightbox(); });
     document.addEventListener("keydown", function (e) { if (e.key === "Escape" && lb.classList.contains("open")) closeLightbox(); });
+  }
+
+  /* ---------- Sélecteur de quantité (lightbox) ---------- */
+  function initLightboxQty() {
+    var qtyInput = document.getElementById("lb-qty");
+    var dec = document.getElementById("lb-qty-dec");
+    var inc = document.getElementById("lb-qty-inc");
+    if (!qtyInput) return;
+    dec && dec.addEventListener("click", function () {
+      qtyInput.value = Math.max(1, (parseInt(qtyInput.value, 10) || 1) - 1);
+    });
+    inc && inc.addEventListener("click", function () {
+      qtyInput.value = (parseInt(qtyInput.value, 10) || 1) + 1;
+    });
   }
 
   /* ---------- Révélation au scroll ---------- */
@@ -268,5 +281,6 @@
     initCarousel();
     initForm();
     initModelParam();
+    initLightboxQty();
   });
 })();

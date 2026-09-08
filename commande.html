@@ -1,0 +1,138 @@
+<!doctype html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Commande — BENJ. Medical Couture</title>
+  <meta name="description" content="Finaliser votre commande BENJ. Medical Couture — livraison et paiement sécurisé." />
+  <meta name="theme-color" content="#f6f2ea" />
+  <meta name="robots" content="noindex" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="assets/css/style.css?v=12" />
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23272219'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23c6a15b' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E" />
+</head>
+<body>
+
+  <!-- ░░ NAV ░░ -->
+  <header class="nav nav--solid" id="nav">
+    <div class="nav__inner">
+      <button class="nav__burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="menu"><span></span><span></span></button>
+      <a class="nav__brand" href="index.html" aria-label="BENJ. Medical Couture — accueil">
+        <span class="nav__word">BENJ.</span>
+        <span class="nav__sub">Medical Couture</span>
+      </a>
+      <a class="nav__cart" href="panier.html" aria-label="Voir le panier">
+        <svg viewBox="0 0 24 24" width="21" height="21" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M4 7h16l-1.4 11.2a2 2 0 0 1-2 1.8H7.4a2 2 0 0 1-2-1.8L4 7Z"/><path d="M8 7V6a4 4 0 0 1 8 0v1"/></svg>
+        <span class="nav__cart-count" id="cart-count" hidden>0</span>
+      </a>
+    </div>
+  </header>
+
+  <!-- ░░ MENU PLEIN ÉCRAN ░░ -->
+  <div class="menu" id="menu" aria-hidden="true">
+    <nav class="menu__nav" aria-label="Menu">
+      <a href="index.html">Accueil</a>
+      <a href="maison.html">La Maison</a>
+      <a href="index.html#collection">La Collection</a>
+      <a href="panier.html">Panier</a>
+      <a href="contact.html">Contact</a>
+    </nav>
+  </div>
+
+  <!-- ░░ COMMANDE ░░ -->
+  <section class="order subpage-first" id="commande">
+    <div class="wrap order__inner checkout-inner">
+      <div class="checkout-form-col">
+        <p class="eyebrow">Dernière étape</p>
+        <h1 class="section-title">Finaliser la commande.</h1>
+        <p class="lede" style="margin:1.2rem 0 2.2rem;">Renseignez vos coordonnées de livraison. Vous serez ensuite redirigé vers notre paiement sécurisé.</p>
+
+        <form class="order__form" id="checkout-form" novalidate>
+          <div class="field field--full">
+            <label for="c-name">Nom complet *</label>
+            <input id="c-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="c-email">Email *</label>
+            <input id="c-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="c-phone">Téléphone</label>
+            <input id="c-phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+          <div class="field field--full">
+            <label for="c-address">Adresse *</label>
+            <input id="c-address" name="address" type="text" autocomplete="street-address" required />
+          </div>
+          <div class="field">
+            <label for="c-postal">Code postal *</label>
+            <input id="c-postal" name="postal" type="text" autocomplete="postal-code" required />
+          </div>
+          <div class="field">
+            <label for="c-city">Ville *</label>
+            <input id="c-city" name="city" type="text" autocomplete="address-level2" required />
+          </div>
+          <div class="field field--full">
+            <label for="c-country">Pays</label>
+            <input id="c-country" name="country" type="text" autocomplete="country-name" value="France" />
+          </div>
+          <div class="field field--full">
+            <label for="c-notes">Note (gravure, occasion, instructions de livraison…)</label>
+            <textarea id="c-notes" name="notes" rows="3"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--dark btn--block" id="checkout-pay">Continuer vers le paiement</button>
+          <p class="order__note" id="checkout-note" role="status" aria-live="polite"></p>
+
+          <div class="checkout-recap" id="checkout-recap" hidden>
+            <label for="checkout-recap-text">Récapitulatif de votre commande</label>
+            <textarea id="checkout-recap-text" rows="9" readonly></textarea>
+            <div class="checkout-recap__actions">
+              <button type="button" class="btn btn--ghost" id="checkout-copy">Copier le récapitulatif</button>
+              <a href="#" class="btn btn--dark" id="checkout-mail" hidden>Nous l'envoyer par email</a>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <aside class="cart-aside checkout-summary-col">
+        <h2 class="cart-aside__title">Votre commande</h2>
+        <div id="checkout-items"><!-- injecté par JS --></div>
+        <div class="cart-aside__row cart-aside__row--total">
+          <span>Total</span>
+          <span id="checkout-total">0 €</span>
+        </div>
+        <p class="checkout-secure">
+          <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+          Paiement sécurisé — traité par Stripe
+        </p>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ░░ FOOTER ░░ -->
+  <footer class="foot">
+    <div class="wrap foot__inner">
+      <div class="foot__brand">
+        <span class="foot__word">BENJ.</span>
+        <span class="foot__sub">Medical Couture</span>
+      </div>
+      <p class="foot__line">L'alliance du style et de l'exigence.</p>
+      <nav class="foot__nav" aria-label="Pied de page">
+        <a href="index.html">Accueil</a>
+        <a href="maison.html">La Maison</a>
+        <a href="contact.html">Contact</a>
+      </nav>
+      <p class="foot__copy">© 2024–2026 BENJ. Medical Couture. Tous droits réservés.</p>
+    </div>
+  </footer>
+
+  <script src="assets/js/products.js?v=1"></script>
+  <script src="assets/js/cart.js?v=1"></script>
+  <script src="assets/js/main.js?v=12"></script>
+  <script src="assets/js/checkout.js?v=1"></script>
+</body>
+</html>

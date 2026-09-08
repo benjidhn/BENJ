@@ -64,6 +64,9 @@ figure{ margin:0; }
 .nav__word{ font-family:var(--font-serif); font-weight:400; font-size:1.55rem; letter-spacing:.2em; }
 .nav__sub{ font-size:.54rem; letter-spacing:.46em; text-transform:uppercase; color:var(--gold); margin-top:.45rem; }
 .nav__spacer{ grid-column:3; }
+.nav__cart{ grid-column:3; justify-self:end; position:relative; display:inline-flex; align-items:center; justify-content:center; width:30px; height:24px; color:inherit; transition:opacity .3s var(--ease); }
+.nav__cart:hover{ opacity:.7; }
+.nav__cart-count{ position:absolute; top:-.5rem; right:-.6rem; min-width:1.15rem; height:1.15rem; padding:0 .3rem; border-radius:50%; background:var(--gold); color:var(--charcoal); font-size:.6rem; font-weight:500; line-height:1.15rem; text-align:center; letter-spacing:0; }
 .nav__burger{ grid-column:1; justify-self:start; display:inline-flex; flex-direction:column; justify-content:center; gap:6px; background:none; border:0; cursor:pointer; width:30px; height:24px; padding:0; z-index:130; color:inherit; }
 .nav__burger span{ display:block; height:1.5px; width:26px; background:currentColor; transition:.4s var(--ease); }
 /* Nav claire par-dessus le hero */
@@ -143,6 +146,7 @@ figure{ margin:0; }
 .card__name::after{ content:""; position:absolute; left:50%; right:50%; bottom:-.35rem; height:1px; background:var(--gold); transition:left .5s var(--ease), right .5s var(--ease); }
 .card:hover .card__name::after{ left:0; right:0; }
 .card__hue{ font-size:.62rem; letter-spacing:.32em; text-transform:uppercase; color:var(--label); margin:.9rem 0 0; }
+.card__price{ font-family:var(--font-serif); font-size:.92rem; color:var(--gold); margin:.5rem 0 0; }
 .card__words{ display:none; }
 
 /* ============================================================ SAVOIR-FAIRE */
@@ -203,6 +207,46 @@ figure{ margin:0; }
 .order__note{ grid-column:1/-1; margin:0; font-size:.85rem; color:var(--terra); min-height:1.2em; }
 .order__note.ok{ color:#5a7a3a; }
 
+/* ============================================================ PANIER */
+.cart-page{ padding:0 0 clamp(5rem,12vh,9rem); }
+.cart-page__head{ text-align:center; max-width:60ch; margin:0 auto clamp(2.6rem,5vh,4rem); }
+.cart-layout{ display:grid; grid-template-columns:1.6fr 1fr; gap:clamp(2rem,5vw,4rem); align-items:start; }
+
+.cart-empty{ text-align:center; padding:clamp(2.5rem,6vh,4rem) 1rem; border:1px solid var(--line); }
+.cart-empty .lede{ margin:0 0 1.6rem; }
+
+.cart-list{ display:flex; flex-direction:column; }
+.cart-row{ display:grid; grid-template-columns:auto 1fr auto auto auto; align-items:center; gap:1.2rem; padding:1.4rem 0; border-bottom:1px solid var(--line); }
+.cart-row__visual{ width:80px; height:100px; overflow:hidden; background:var(--sand-deep); }
+.cart-row__visual img{ width:100%; height:100%; object-fit:cover; }
+.cart-row__hue{ font-size:.6rem; letter-spacing:.28em; text-transform:uppercase; color:var(--label); margin:0 0 .3rem; }
+.cart-row__name{ font-family:var(--font-serif); font-weight:400; font-size:1.1rem; margin:0; }
+.cart-row__unit{ font-size:.8rem; color:var(--ink-soft); margin:.35rem 0 0; }
+.cart-row__qty{ display:inline-flex; border:1px solid var(--line); }
+.cart-row__qty .qty__btn{ width:2.1rem; font-size:1rem; }
+.cart-row__qty .qty__val{ width:2.4rem; font-size:.9rem; }
+.cart-row__total{ font-family:var(--font-serif); font-size:1.05rem; margin:0; min-width:4.5rem; text-align:right; }
+.cart-row__remove{ background:none; border:0; color:var(--ink-soft); font-size:1.3rem; line-height:1; cursor:pointer; padding:.2rem; transition:color .3s var(--ease); }
+.cart-row__remove:hover{ color:var(--terra); }
+
+.cart-aside{ background:var(--sand); border:1px solid var(--line); padding:clamp(1.6rem,3vw,2.2rem); position:sticky; top:6.5rem; }
+.cart-aside__title{ font-family:var(--font-serif); font-weight:400; font-size:1.25rem; margin:0 0 1.4rem; }
+.cart-aside__row{ display:flex; justify-content:space-between; gap:1rem; font-size:.86rem; color:var(--ink-soft); padding:.75rem 0; border-top:1px solid var(--line); }
+.cart-aside__row--total{ border-top:1px solid var(--ink); color:var(--ink); font-family:var(--font-serif); font-size:1.1rem; padding-top:1.1rem; margin-bottom:1.4rem; }
+.cart-aside .btn{ margin-top:.4rem; }
+
+/* ============================================================ COMMANDE (checkout) */
+.checkout-inner{ grid-template-columns:1.5fr 1fr; }
+.checkout-form-col .order__form{ background:none; border:0; padding:0; grid-template-columns:1fr 1fr; }
+.checkout-summary-col{ position:sticky; top:6.5rem; }
+.checkout-item{ display:flex; justify-content:space-between; gap:1rem; font-size:.88rem; color:var(--ink-soft); padding:.65rem 0; border-top:1px solid var(--line); }
+.checkout-secure{ display:flex; align-items:center; gap:.5rem; font-size:.72rem; letter-spacing:.08em; color:var(--ink-soft); margin:0; }
+.checkout-recap{ grid-column:1/-1; margin-top:.8rem; display:flex; flex-direction:column; gap:.7rem; }
+.checkout-recap label{ font-size:.66rem; letter-spacing:.24em; text-transform:uppercase; color:var(--ink-soft); }
+.checkout-recap textarea{ font-family:"Courier New", monospace; font-size:.82rem; line-height:1.6; padding:1rem; border:1px solid var(--line); background:var(--sand); color:var(--ink); resize:vertical; }
+.checkout-recap__actions{ display:flex; gap:.9rem; flex-wrap:wrap; }
+.checkout-recap__actions .btn{ padding:.85rem 1.6rem; }
+
 /* ============================================================ FOOTER */
 .foot{ background:var(--charcoal); color:var(--cream); padding:clamp(3.5rem,7vh,5rem) 0 2.5rem; text-align:center; }
 .foot__brand{ margin-bottom:1rem; }
@@ -236,7 +280,17 @@ figure{ margin:0; }
   .pv-grid{ gap:.6rem; }
   .pv-grid.single .cell{ aspect-ratio:auto; height:min(64vh,620px); }
 }
-.lb__foot{ padding:clamp(1.4rem,3vw,2rem) clamp(1.2rem,3vw,2.4rem) clamp(1.6rem,3.5vw,2.6rem); }
+.lb__foot{ padding:clamp(1.4rem,3vw,2rem) clamp(1.2rem,3vw,2.4rem) clamp(1.6rem,3.5vw,2.6rem); text-align:center; }
+.lb__price{ font-family:var(--font-serif); font-size:1.4rem; color:var(--gold); margin:0 0 1.2rem; }
+.lb__buy{ display:flex; align-items:stretch; justify-content:center; gap:.9rem; flex-wrap:wrap; }
+.qty__group{ display:inline-flex; align-items:stretch; border:1px solid var(--line); }
+.qty__btn{ width:2.6rem; background:none; border:0; color:var(--ink); font-size:1.1rem; cursor:pointer; transition:background .3s var(--ease); }
+.qty__btn:hover{ background:var(--sand); }
+.qty__val{ width:2.8rem; border:0; border-left:1px solid var(--line); border-right:1px solid var(--line); text-align:center; font-family:var(--font-sans); font-size:.95rem; background:var(--cream); color:var(--ink); }
+.qty__val:focus{ outline:none; }
+.lb__buy .btn{ padding:1.15rem 2.2rem; }
+.lb__added{ min-height:1.2em; font-size:.82rem; color:var(--gold); margin:1rem 0 0; }
+.lb__foot #lb-order{ display:inline-block; margin-top:1.2rem; }
 
 /* ============================================================ REVEAL */
 .reveal{ opacity:0; transform:translateY(28px); transition:opacity 1s var(--ease), transform 1s var(--ease); }
@@ -248,10 +302,20 @@ section[id]{ scroll-margin-top:88px; }
   .manifeste__inner, .craft__inner, .ecrin__inner, .order__inner{ grid-template-columns:1fr; }
   .pillars{ grid-template-columns:1fr 1fr; }
   .craft__grid{ grid-template-columns:1fr 1fr; }
+  .cart-layout{ grid-template-columns:1fr; }
+  .cart-aside, .checkout-summary-col{ position:static; }
 }
 @media (max-width:760px){
   .craft__grid, .order__form{ grid-template-columns:1fr; }
   .order__form{ gap:1rem; }
+  .checkout-form-col .order__form{ grid-template-columns:1fr; }
+  .cart-row{ grid-template-columns:auto 1fr; grid-template-areas:"visual body" "visual qty" "visual total"; row-gap:.6rem; }
+  .cart-row__visual{ grid-area:visual; }
+  .cart-row__body{ grid-area:body; }
+  .cart-row__qty{ grid-area:qty; }
+  .cart-row__total{ grid-area:total; text-align:left; }
+  .cart-row__remove{ position:absolute; top:1.4rem; right:0; }
+  .cart-row{ position:relative; }
 }
 /* Première section des pages internes : espace sous la nav fixe */
 .subpage-first{ padding-top:clamp(9rem,17vh,12rem) !important; }

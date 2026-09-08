@@ -3,9 +3,10 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact — BENJ. Medical Couture</title>
-  <meta name="description" content="Contacter la maison BENJ. — pièces en édition limitée, commandes et cadeaux sur mesure." />
+  <title>Merci — BENJ. Medical Couture</title>
+  <meta name="description" content="Merci pour votre commande BENJ. Medical Couture." />
   <meta name="theme-color" content="#f6f2ea" />
+  <meta name="robots" content="noindex" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
@@ -41,40 +42,15 @@
     </nav>
   </div>
 
-  <!-- ░░ CONTACT ░░ -->
-  <section class="order subpage-first" id="commande">
-    <div class="wrap order__inner">
-      <div class="order__intro reveal">
-        <p class="eyebrow">Sur rendez-vous</p>
-        <h2 class="section-title">Prendre contact.</h2>
-        <p class="lede">Édition limitée. Laissez-nous vos coordonnées, nous revenons vers vous.</p>
-      </div>
-
-      <form class="order__form reveal" id="order-form" novalidate>
-        <div class="field">
-          <label for="f-name">Nom</label>
-          <input id="f-name" name="name" type="text" autocomplete="name" required />
-        </div>
-        <div class="field">
-          <label for="f-email">Email</label>
-          <input id="f-email" name="email" type="email" autocomplete="email" required />
-        </div>
-        <div class="field field--full">
-          <label for="f-model">Modèle souhaité</label>
-          <select id="f-model" name="model">
-            <option value="">Sans préférence</option>
-            <option>01 · Sahara Sable — Léopard sable</option>
-            <option>02 · Sahara Olive — Léopard olive</option>
-            <option>03 · Sahara Nuit — Léopard nocturne</option>
-          </select>
-        </div>
-        <div class="field field--full">
-          <label for="f-msg">Votre message</label>
-          <textarea id="f-msg" name="message" rows="4" placeholder="Un cadeau, une gravure, une occasion particulière…"></textarea>
-        </div>
-        <button type="submit" class="btn btn--dark btn--block">Envoyer la demande</button>
-        <p class="order__note" id="order-note" role="status" aria-live="polite"></p>
-      </form>
+  <!-- ░░ MERCI ░░ -->
+  <section class="manifeste subpage-first" id="merci">
+    <div class="wrap manifeste__inner reveal in">
+      <p class="eyebrow">Commande confirmée</p>
+      <h1 class="section-title manifeste__title">Merci pour votre confiance.</h1>
+      <p class="manifeste__line">Votre commande a bien été transmise. Un email de confirmation vous a été envoyé par notre partenaire de paiement.</p>
+      <p class="lede" style="margin:1.6rem auto 0;max-width:40ch;">Référence de commande : <strong id="merci-ref">—</strong></p>
+      <p class="lede" style="margin:.6rem auto 2.4rem;max-width:44ch;">La maison BENJ. prépare votre pièce avec le plus grand soin. Comptez 3 à 5 jours ouvrés avant expédition.</p>
+      <a href="index.html" class="link link--lg">Retour à l'accueil</a>
     </div>
   </section>
 
@@ -98,5 +74,6 @@
   <script src="assets/js/products.js?v=1"></script>
   <script src="assets/js/cart.js?v=1"></script>
   <script src="assets/js/main.js?v=12"></script>
+  <script src="assets/js/checkout.js?v=1"></script>
 </body>
 </html>
