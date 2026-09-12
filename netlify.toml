@@ -1,0 +1,9 @@
+[build]
+  publish = "."
+  functions = "netlify/functions"
+
+[functions]
+  node_bundler = "esbuild"
+
+# Le site reste un simple dossier de fichiers statiques ; seule la
+# fonction serveur (paiement Stripe) tourne côté Netlify.

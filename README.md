@@ -1,40 +1,50 @@
 # BENJ. — Medical Couture
 
-Site vitrine de luxe pour **BENJ. Medical Couture** : le calot de chirurgie réinventé en pièce de couture. Présentation de la **Collection Sahara** (édition limitée) dans un esprit maison de couture, avec panier et commande en ligne.
+Site vitrine de luxe pour **BENJ. Medical Couture** : le calot de chirurgie réinventé en pièce de couture. Présentation de la **Collection Sahara** (édition limitée) dans un esprit maison de couture, avec panier et paiement intégré.
 
 ## Aperçu
 
 - Palette sable / or / anthracite, typographie Bodoni Moda + Jost
 - Animations de révélation au scroll, navigation collante, menu mobile
-- **Panier persistant** (localStorage) et **page de commande** avec paiement sécurisé Stripe
+- **Panier persistant** (localStorage) et **paiement Stripe intégré** (Embedded Checkout — carte et adresse directement sur le site, aucune redirection)
 - Formulaire de contact pour les demandes particulières
 - Entièrement responsive et accessible (respecte `prefers-reduced-motion`)
 
 ## Structure
 
 ```
-index.html                Accueil — hero, collection, lookbook
-maison.html                La Maison
-contact.html                Contact / demandes particulières
-panier.html                 Panier
-commande.html                Commande — coordonnées + paiement
-merci.html                   Confirmation après paiement
+index.html                    Accueil — hero, collection, lookbook
+maison.html                    La Maison
+contact.html                   Contact / demandes particulières
+panier.html                    Panier
+commande.html                  Commande — récapitulatif + paiement intégré
+merci.html                     Confirmation après paiement
 
-assets/css/style.css         Feuille de style
-assets/js/products.js        Source unique des modèles (id, nom, prix…)
-assets/js/cart.js            Panier (localStorage), badge nav
-assets/js/checkout.js        Rendu panier/commande + lien de paiement Stripe
-assets/js/main.js            Collection, lookbook, lightbox, interactions
+assets/css/style.css           Feuille de style
+assets/js/products.js          Source unique des modèles (id, nom, prix…)
+assets/js/cart.js              Panier (localStorage), badge nav
+assets/js/checkout.js          Rendu du panier (panier.html)
+assets/js/embedded-checkout.js Paiement intégré (commande.html + merci.html)
+assets/js/main.js              Collection, lookbook, lightbox, interactions
+
+netlify/functions/
+  create-checkout-session.js   Fonction serveur : crée la session Stripe
+  _products.js                 Catalogue serveur (prix de référence, anti-triche)
+
+netlify.toml                   Configuration Netlify
+package.json                   Dépendance de la fonction serveur (stripe)
 ```
 
 ## Lancer en local
 
-Aucune dépendance. Ouvrir `index.html`, ou servir le dossier :
+Le site (pages + styles + JS) n'a besoin d'aucune dépendance :
 
 ```bash
 python3 -m http.server 8000
 # puis http://localhost:8000
 ```
+
+⚠️ Le paiement (page `commande.html`) a besoin de la fonction serveur, qui ne tourne que sur Netlify (ou via `netlify dev` en local, avec Netlify CLI). Sans elle, le bouton de paiement affiche un message d'attente.
 
 ## Coloris de la collection
 
@@ -48,45 +58,47 @@ python3 -m http.server 8000
 
 ## Personnaliser
 
-- **Modèles, coloris, prix** : tableau `window.BENJ_PRODUCTS` dans `assets/js/products.js` — c'est la seule source à modifier, tout le site (fiches, panier, commande) se met à jour automatiquement. Pour réactiver un ancien modèle, il suffit de l'ajouter de nouveau à ce tableau (les photos `assets/img/<id>-*.jpg` existent déjà pour terracotta et graphite).
+- **Modèles, coloris, prix** : tableau `window.BENJ_PRODUCTS` dans `assets/js/products.js` — pensez à reporter le même changement dans `netlify/functions/_products.js` (le prix facturé vient toujours de ce second fichier, jamais de ce qu'envoie le navigateur).
 - **Couleurs, typo, espacements** : variables `:root` dans `assets/css/style.css`
 
 ---
 
-## 💳 Configuration du paiement Stripe (à faire une seule fois)
+## 💳 Paiement intégré — Stripe Embedded Checkout + Netlify
 
-Le site est hébergé sur GitHub Pages : c'est un site **statique**, sans serveur. On ne peut donc pas y stocker de clé secrète pour encaisser une carte directement. La solution retenue — utilisée par de nombreuses petites maisons — est un **lien de paiement Stripe** (« Payment Link ») : Stripe héberge la page de paiement, encaisse la carte en toute sécurité, et redirige le client vers `merci.html` une fois payé.
+Le paiement se fait **directement sur le site** (carte bancaire + adresse de livraison dans une zone intégrée à la page, jamais de redirection vers un site externe). Techniquement, cela demande un petit bout de code serveur pour créer la session de paiement avec la clé secrète Stripe — une clé secrète ne doit jamais apparaître dans le code d'un site, donc ce calcul ne peut pas se faire dans le navigateur ni sur un hébergement purement statique comme GitHub Pages. C'est pour ça que le site est hébergé sur **Netlify** (gratuit), qui sait exécuter cette fonction serveur tout en servant les mêmes fichiers qu'avant.
 
-### 1. Créer le lien de paiement
+### 1. Créer le site sur Netlify
 
-1. Créez un compte sur [stripe.com](https://stripe.com) (gratuit, aucun engagement).
-2. Dans le dashboard : **Paiements → Liens de paiement → Créer un lien de paiement**.
-3. Ajoutez un produit : *« Calot de chirurgie — Collection Sahara »*, prix **50,00 €**.
-4. Activez **« Le client peut ajuster la quantité »**.
-5. Activez **« Collecter l'adresse de livraison du client »**.
-6. Section **« Champs personnalisés »** : ajoutez un champ texte obligatoire, ex. *« Modèle(s) et coloris souhaités »* — le client y recopie le récapitulatif que notre page de commande lui prépare automatiquement (bouton « Copier le récapitulatif »).
-7. Section **« Après le paiement »** : choisissez *« Rediriger les clients vers votre site »* et indiquez :
-   `https://benjidhn.github.io/BENJ/merci.html`
-8. Enregistrez, puis copiez l'URL du lien obtenu (ex. `https://buy.stripe.com/xxxxxxxx`).
+1. Créez un compte sur [netlify.com](https://netlify.com) (gratuit).
+2. **Add new site → Import an existing project** → connectez votre compte GitHub → choisissez le dépôt `BENJ`.
+3. Laissez les réglages de build par défaut (le fichier `netlify.toml` du dépôt les configure déjà : pas de commande de build, dossier publié = racine, fonctions = `netlify/functions`).
+4. Déployez. Vous obtenez une adresse du type `https://un-nom-au-hasard.netlify.app` (personnalisable dans les réglages du site, ou reliable à un nom de domaine que vous possédez).
 
-### 2. Brancher le lien sur le site
+### 2. Renseigner la clé secrète Stripe
 
-Ouvrir `assets/js/checkout.js` et renseigner tout en haut du fichier :
+1. Sur Netlify : **Site settings → Environment variables → Add a variable**.
+2. Nom : `STRIPE_SECRET_KEY` — valeur : votre clé secrète Stripe (`sk_test_...` pour tester, `sk_live_...` pour de vrais paiements).
+3. Redéployez le site (Netlify le fait généralement automatiquement après l'ajout d'une variable).
+
+⚠️ Cette clé ne doit **jamais** être collée dans un fichier du dépôt — uniquement ici, dans les réglages Netlify.
+
+### 3. Renseigner la clé publiable Stripe (sans risque, elle est faite pour être publique)
+
+Ouvrir `assets/js/embedded-checkout.js` et renseigner tout en haut du fichier :
 
 ```js
-var STRIPE_PAYMENT_LINK = "https://buy.stripe.com/xxxxxxxx"; // votre lien
-var OWNER_EMAIL = "votre-email@exemple.fr"; // reçoit les commandes tant que Stripe n'est pas branché
+var STRIPE_PUBLISHABLE_KEY = "pk_test_..."; // votre clé publiable Stripe
 ```
 
-Tant que `STRIPE_PAYMENT_LINK` est vide, la page de commande affiche un message d'attente et propose d'envoyer le récapitulatif par email à la place — le site reste donc fonctionnel avant même que Stripe soit configuré.
+### 4. Comment ça fonctionne pour le client
 
-### 3. Comment ça fonctionne pour le client
+1. Il compose son panier (`panier.html`), peu importe le mélange de modèles.
+2. Il vérifie son récapitulatif sur `commande.html` et clique sur « Procéder au paiement sécurisé ».
+3. Le site demande à la fonction serveur de préparer le paiement (le prix vient toujours du catalogue serveur, jamais du navigateur), puis affiche le paiement Stripe **directement dans la page** : adresse de livraison et carte bancaire, sans quitter le site.
+4. Une fois payé, il est redirigé vers `merci.html`.
 
-1. Il ajoute un ou plusieurs modèles au panier (`panier.html`).
-2. Il renseigne ses coordonnées de livraison (`commande.html`).
-3. Il est redirigé vers Stripe avec la quantité totale et son email pré-remplis ; il recopie le récapitulatif de commande dans le champ Stripe prévu à cet effet, ajuste si besoin, puis paie par carte.
-4. Après paiement, Stripe le redirige vers `merci.html`.
+### Mode test → mode production
 
-⚠️ Le site ne peut pas vérifier automatiquement qu'un paiement a bien eu lieu (il n'y a pas de serveur) : c'est votre dashboard Stripe qui fait foi pour la préparation des commandes.
+Tant que `STRIPE_SECRET_KEY` (Netlify) et `STRIPE_PUBLISHABLE_KEY` (dans le code) sont vos clés **test** (`sk_test_`/`pk_test_`), aucun vrai paiement n'a lieu — utilisez une carte de test comme `4242 4242 4242 4242`. Le jour où vous êtes prêt à vendre pour de vrai : activez votre compte Stripe (infos bancaires/société), remplacez les deux clés par leurs équivalents `sk_live_`/`pk_live_`, et c'est tout — le reste du code ne change pas.
 
 *L'alliance du style et de l'exigence.*

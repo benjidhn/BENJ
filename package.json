@@ -1,0 +1,9 @@
+{
+  "name": "benj-medical-couture",
+  "private": true,
+  "version": "1.0.0",
+  "description": "BENJ. Medical Couture — site vitrine + fonction serveur de paiement (Netlify Functions + Stripe Embedded Checkout).",
+  "dependencies": {
+    "stripe": "^17.4.0"
+  }
+}
