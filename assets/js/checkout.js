@@ -4,12 +4,21 @@
    ============================================================
 
    ⚠️  CONFIGURATION REQUISE — voir README.md « Paiement Stripe »
-   Remplacez les deux constantes ci-dessous une fois votre lien
-   de paiement Stripe créé. Tant que STRIPE_PAYMENT_LINK vaut
-   "", le site affiche un message d'attente au lieu de rediriger
-   vers un paiement qui n'existe pas encore.
+   Un lien de paiement Stripe dédié par modèle : le client n'a
+   jamais à re-préciser quel coloris il a choisi, Stripe le sait
+   déjà via le produit. Tant qu'un modèle n'a pas de lien, le site
+   utilise STRIPE_MIXED_CART_LINK à sa place (avec son champ
+   personnalisé, seul cas où le coloris doit être reprécisé).
    ------------------------------------------------------------ */
-var STRIPE_PAYMENT_LINK = "https://buy.stripe.com/test_fZu5kF1N1cQR5cA1wx9bO00"; // ⚠️ lien de TEST — à remplacer par le lien du compte de production avant un vrai lancement
+var STRIPE_PAYMENT_LINKS = {
+  // ⚠️ liens de TEST — à remplacer par les liens du compte de production avant un vrai lancement
+  sable: "https://buy.stripe.com/test_fZu5kF1N1cQR5cA1wx9bO00",
+  olive: "https://buy.stripe.com/test_fZucN7dvJ8ABbAY0st9bO01",
+  nuit:  "https://buy.stripe.com/test_fZu3cxgHV0458oM4IJ9bO02"
+};
+// Repli pour une commande qui mélangerait plusieurs coloris : le seul cas
+// où l'on redemande encore le détail, via le champ personnalisé du lien.
+var STRIPE_MIXED_CART_LINK = STRIPE_PAYMENT_LINKS.sable;
 var OWNER_EMAIL = "benji.dhn@gmail.com";
 
 (function () {
@@ -141,14 +150,26 @@ var OWNER_EMAIL = "benji.dhn@gmail.com";
     if (totalEl) totalEl.textContent = fmt(window.BENJ_Cart.total());
   }
 
-  function buildStripeUrl(data) {
+  // Un seul modèle dans le panier ? Son lien dédié sait déjà lequel —
+  // rien à repréciser. Plusieurs modèles différents : repli sur le lien
+  // générique, seul cas où le champ personnalisé reste utile.
+  function resolvePaymentLink() {
+    var lines = window.BENJ_Cart.lines();
+    if (lines.length === 1) {
+      var dedicated = STRIPE_PAYMENT_LINKS[lines[0].product.id];
+      if (dedicated) return { url: dedicated, needsModelField: false };
+    }
+    return { url: STRIPE_MIXED_CART_LINK, needsModelField: true };
+  }
+
+  function buildStripeUrl(link, data) {
     var params = new URLSearchParams();
     params.set("client_reference_id", data.ref);
     if (data.email) params.set("prefilled_email", data.email);
     var qty = window.BENJ_Cart.count();
     if (qty) params.set("quantity", String(qty));
-    var sep = STRIPE_PAYMENT_LINK.indexOf("?") > -1 ? "&" : "?";
-    return STRIPE_PAYMENT_LINK + sep + params.toString();
+    var sep = link.indexOf("?") > -1 ? "&" : "?";
+    return link + sep + params.toString();
   }
 
   function initCheckoutForm() {
@@ -158,7 +179,7 @@ var OWNER_EMAIL = "benji.dhn@gmail.com";
     var recapBox = document.getElementById("checkout-recap");
     var recapText = document.getElementById("checkout-recap-text");
     var copyBtn = document.getElementById("checkout-copy");
-    var payBtn = document.getElementById("checkout-pay");
+    var continueBtn = document.getElementById("checkout-continue");
 
     if (!window.BENJ_Cart.lines().length) return;
 
@@ -187,15 +208,10 @@ var OWNER_EMAIL = "benji.dhn@gmail.com";
         window.localStorage.setItem("benj_last_order", JSON.stringify({ ref: data.ref, recap: recap, email: data.email }));
       } catch (err) {}
 
-      if (recapBox) {
-        recapBox.hidden = false;
-        recapText.value = recap;
-      }
-      note.textContent = "";
+      var resolved = resolvePaymentLink();
 
-      if (STRIPE_PAYMENT_LINK) {
-        window.location.href = buildStripeUrl(data);
-      } else {
+      if (!resolved.url) {
+        if (recapBox) { recapBox.hidden = false; recapText.value = recap; }
         note.textContent = "Le paiement en ligne sera activé très prochainement. En attendant, votre récapitulatif est prêt ci-dessous : copiez-le et envoyez-le nous, ou écrivez-nous directement.";
         note.className = "order__note ok";
         var mailBtn = document.getElementById("checkout-mail");
@@ -203,12 +219,30 @@ var OWNER_EMAIL = "benji.dhn@gmail.com";
           mailBtn.hidden = false;
           mailBtn.href = "mailto:" + OWNER_EMAIL + "?subject=" + encodeURIComponent("Commande " + data.ref + " — BENJ.") + "&body=" + encodeURIComponent(recap);
         }
+        return;
+      }
+
+      if (!resolved.needsModelField) {
+        // Un seul modèle : Stripe le connaît déjà via le lien dédié,
+        // rien à recopier — direction le paiement immédiatement.
+        window.location.href = buildStripeUrl(resolved.url, data);
+        return;
+      }
+
+      // Plusieurs coloris différents dans la commande : cas rare où le
+      // lien générique doit encore recevoir le détail. On ne redirige
+      // qu'après que le client a pu copier le récapitulatif.
+      if (recapBox) { recapBox.hidden = false; recapText.value = recap; }
+      note.textContent = "Votre commande combine plusieurs coloris : copiez le récapitulatif ci-dessous, puis collez-le dans le champ dédié sur la page de paiement.";
+      note.className = "order__note ok";
+      if (continueBtn) {
+        continueBtn.hidden = false;
+        continueBtn.onclick = function (ev) {
+          ev.preventDefault();
+          window.location.href = buildStripeUrl(resolved.url, data);
+        };
       }
     });
-
-    if (payBtn && STRIPE_PAYMENT_LINK) {
-      payBtn.textContent = "Procéder au paiement sécurisé";
-    }
 
     if (copyBtn) {
       copyBtn.addEventListener("click", function () {
