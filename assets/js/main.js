@@ -5,6 +5,7 @@
   "use strict";
 
   var IMG = "assets/img/";
+  var IMG_V = "?v=2"; // cache-busting : incrémenter à chaque remplacement de photo
   var PRODUCTS = window.BENJ_PRODUCTS || [];
 
   // Grille lookbook : image + classe de mise en page (masonry)
@@ -45,7 +46,7 @@
           '<div class="card__visual">' +
             '<span class="card__num">' + p.num + "</span>" +
             '<span class="card__view">Voir le modèle</span>' +
-            '<img src="' + IMG + main + '" alt="Calot ' + p.name + '" loading="lazy" />' +
+            '<img src="' + IMG + main + IMG_V + '" alt="Calot ' + p.name + '" loading="lazy" />' +
           "</div>" +
           '<div class="card__body">' +
             '<h3 class="card__name">' + p.name + "</h3>" +
@@ -66,7 +67,7 @@
     LOOKBOOK.forEach(function (item, i) {
       var b = el(
         '<button class="lb-item ' + item.cls + ' reveal" style="transition-delay:' + (i * 40) + 'ms" aria-label="Agrandir : ' + item.alt + '">' +
-          '<img src="' + IMG + item.src + '" alt="' + item.alt + '" loading="lazy" />' +
+          '<img src="' + IMG + item.src + IMG_V + '" alt="' + item.alt + '" loading="lazy" />' +
         "</button>"
       );
       b.addEventListener("click", function () { openImage(item.src, item.alt); });
@@ -82,7 +83,7 @@
     CRAFT.forEach(function (item, i) {
       var card = el(
         '<button class="craft__card reveal" style="transition-delay:' + (i * 80) + 'ms" aria-label="Agrandir : ' + item.alt + '">' +
-          '<span class="craft__ph"><img src="' + IMG + item.src + '" alt="' + item.alt + '" loading="lazy" /></span>' +
+          '<span class="craft__ph"><img src="' + IMG + item.src + IMG_V + '" alt="' + item.alt + '" loading="lazy" /></span>' +
           "<h3>" + item.title + "</h3>" +
           "<p>" + item.desc + "</p>" +
         "</button>"
@@ -134,7 +135,7 @@
     if (lbCare) lbCare.textContent = window.BENJ_CARE || "";
     lbGrid.className = "pv-grid";
     lbGrid.innerHTML = galleryFor(p).map(function (g) {
-      return '<figure class="cell ' + g.cls + '"><img src="' + IMG + g.src + '" alt="' + g.alt + '" loading="lazy" /></figure>';
+      return '<figure class="cell ' + g.cls + '"><img src="' + IMG + g.src + IMG_V + '" alt="' + g.alt + '" loading="lazy" /></figure>';
     }).join("");
     if (lbFoot) lbFoot.style.display = "";
     var lbAdd = document.getElementById("lb-add");
@@ -155,7 +156,7 @@
     document.getElementById("lb-name").textContent = "Collection Sahara";
     document.getElementById("lb-words").textContent = alt;
     lbGrid.className = "pv-grid single";
-    lbGrid.innerHTML = '<figure class="cell"><img src="' + IMG + src + '" alt="' + alt + '" /></figure>';
+    lbGrid.innerHTML = '<figure class="cell"><img src="' + IMG + src + IMG_V + '" alt="' + alt + '" /></figure>';
     if (lbFoot) lbFoot.style.display = "none";
     lbShow();
   }
