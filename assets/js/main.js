@@ -5,13 +5,13 @@
   "use strict";
 
   var IMG = "assets/img/";
-  var IMG_V = "?v=2"; // cache-busting : incrémenter à chaque remplacement de photo
+  var IMG_V = "?v=3"; // cache-busting : incrémenter à chaque remplacement de photo
   var PRODUCTS = window.BENJ_PRODUCTS || [];
 
   // Grille lookbook : image + classe de mise en page (masonry)
   var LOOKBOOK = [
-    { src:"front.jpg", alt:"Sahara Sable, face",               cls:"big" },
-    { src:"back.jpg",  alt:"Sahara Sable, dos et nœud",        cls:"tall" },
+    { src:"back.jpg",  alt:"Sahara Sable, dos et nœud",        cls:"big" },
+    { src:"front.jpg", alt:"Sahara Sable, face",               cls:"tall" },
     { src:"bow.jpg",   alt:"Nœud du lien ajustable",           cls:"wide" },
     { src:"top.jpg",   alt:"Sahara Sable, dessus",             cls:"" },
     { src:"lining.jpg",alt:"Doublure intérieure",              cls:"" }
