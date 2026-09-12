@@ -250,7 +250,9 @@ figure{ margin:0; }
 
 /* ============================================================ COMMANDE (checkout) */
 .checkout-inner{ grid-template-columns:1.5fr 1fr; }
+.checkout-form-col .order__form{ background:none; border:0; padding:0; grid-template-columns:1fr 1fr; }
 .checkout-summary-col{ position:sticky; top:6.5rem; }
+#payment-element .checkout-embed__loading{ padding:2.5rem 0; }
 .checkout-item{ display:flex; justify-content:space-between; gap:1rem; font-size:.88rem; color:var(--ink-soft); padding:.65rem 0; border-top:1px solid var(--line); }
 .checkout-secure{ display:flex; align-items:center; gap:.5rem; font-size:.72rem; letter-spacing:.08em; color:var(--ink-soft); margin:1.4rem 0 0; }
 .checkout-trust{ margin:1.6rem 0 0; display:flex; flex-direction:column; gap:.6rem; }
@@ -324,6 +326,7 @@ section[id]{ scroll-margin-top:88px; }
 @media (max-width:760px){
   .craft__grid, .order__form{ grid-template-columns:1fr; }
   .order__form{ gap:1rem; }
+  .checkout-form-col .order__form{ grid-template-columns:1fr; }
   .cart-row{ grid-template-columns:auto 1fr; grid-template-areas:"visual body" "visual qty" "visual total"; row-gap:.6rem; }
   .cart-row__visual{ grid-area:visual; }
   .cart-row__body{ grid-area:body; }

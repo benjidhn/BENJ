@@ -11,7 +11,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=14" />
+  <link rel="stylesheet" href="assets/css/style.css?v=15" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23272219'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23c6a15b' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
@@ -53,19 +53,61 @@
     </nav>
   </div>
 
-  <!-- ░░ RÉCAPITULATIF (avant paiement) ░░ -->
+  <!-- ░░ ÉTAPE 2 — COMMANDE (livraison) ░░ -->
   <section class="order" id="commande-recap">
     <div class="wrap order__inner checkout-inner">
       <div class="checkout-form-col">
         <p class="eyebrow">Étape 2 sur 3</p>
         <h1 class="section-title">Votre commande.</h1>
-        <p class="lede" style="margin:1.2rem 0 2.2rem;">Vérifiez votre sélection. Le paiement — carte et adresse de livraison — se fait juste après, directement ici.</p>
+        <p class="lede" style="margin:1.2rem 0 2.2rem;">Renseignez vos coordonnées de livraison. Le paiement se fait juste après, directement ici.</p>
 
-        <ul class="checkout-trust">
-          <li>Paiement sécurisé, chiffré de bout en bout</li>
-          <li>Aucune donnée bancaire ne transite par notre site</li>
-          <li>Livraison suivie et soignée</li>
-        </ul>
+        <form class="order__form" id="shipping-form" novalidate>
+          <div class="field field--full">
+            <label for="c-name">Nom complet *</label>
+            <input id="c-name" name="name" type="text" autocomplete="name" required />
+          </div>
+          <div class="field">
+            <label for="c-email">Email *</label>
+            <input id="c-email" name="email" type="email" autocomplete="email" required />
+          </div>
+          <div class="field">
+            <label for="c-phone">Téléphone</label>
+            <input id="c-phone" name="phone" type="tel" autocomplete="tel" />
+          </div>
+          <div class="field field--full">
+            <label for="c-address">Adresse *</label>
+            <input id="c-address" name="address" type="text" autocomplete="street-address" required />
+          </div>
+          <div class="field">
+            <label for="c-postal">Code postal *</label>
+            <input id="c-postal" name="postal" type="text" autocomplete="postal-code" required />
+          </div>
+          <div class="field">
+            <label for="c-city">Ville *</label>
+            <input id="c-city" name="city" type="text" autocomplete="address-level2" required />
+          </div>
+          <div class="field field--full">
+            <label for="c-country">Pays</label>
+            <select id="c-country" name="country" autocomplete="country">
+              <option value="FR" selected>France</option>
+              <option value="BE">Belgique</option>
+              <option value="CH">Suisse</option>
+              <option value="LU">Luxembourg</option>
+              <option value="MC">Monaco</option>
+              <option value="DE">Allemagne</option>
+              <option value="ES">Espagne</option>
+              <option value="IT">Italie</option>
+              <option value="GB">Royaume-Uni</option>
+            </select>
+          </div>
+          <div class="field field--full">
+            <label for="c-notes">Note (gravure, occasion, instructions de livraison…)</label>
+            <textarea id="c-notes" name="notes" rows="3"></textarea>
+          </div>
+
+          <button type="submit" class="btn btn--dark btn--block" id="shipping-continue">Continuer vers le paiement</button>
+          <p class="order__note" id="shipping-error" role="status" aria-live="polite"></p>
+        </form>
       </div>
 
       <aside class="cart-aside checkout-summary-col">
@@ -75,8 +117,6 @@
           <span>Total</span>
           <span id="checkout-total">0 €</span>
         </div>
-        <button type="button" class="btn btn--dark btn--block" id="checkout-start">Procéder au paiement sécurisé</button>
-        <p class="order__note" id="checkout-error" role="status" aria-live="polite"></p>
         <p class="checkout-secure">
           <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
           Paiement sécurisé — traité par Stripe
@@ -85,17 +125,27 @@
     </div>
   </section>
 
-  <!-- ░░ PAIEMENT INTÉGRÉ ░░ -->
+  <!-- ░░ ÉTAPE 3 — PAIEMENT ░░ -->
   <section class="order" id="commande-paiement" hidden>
     <div class="wrap">
       <div style="text-align:center;max-width:60ch;margin:0 auto clamp(2rem,4vh,3rem);">
         <p class="eyebrow">Étape 3 sur 3</p>
         <h1 class="section-title">Paiement.</h1>
+        <p class="lede" style="margin:1rem 0 0;">Coordonnées de carte — le montant est débité en une fois, sans quitter cette page.</p>
       </div>
-      <div class="checkout-embed" id="checkout-embed">
-        <p class="checkout-embed__loading">Chargement du paiement sécurisé…</p>
+
+      <div style="max-width:34rem;margin:0 auto;">
+        <div class="payment-summary" id="payment-summary"><!-- injecté par JS --></div>
+        <form id="payment-form">
+          <div id="payment-element"><p class="checkout-embed__loading">Chargement du paiement sécurisé…</p></div>
+          <button type="submit" class="btn btn--dark btn--block" id="payment-submit" style="margin-top:1.6rem;" disabled>Payer</button>
+          <p class="order__note" id="payment-error" role="status" aria-live="polite"></p>
+          <p class="checkout-secure" style="justify-content:center;margin-top:1.4rem;">
+            <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><rect x="5" y="10" width="14" height="10" rx="1.5"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/></svg>
+            Paiement chiffré — traité par Stripe
+          </p>
+        </form>
       </div>
-      <p class="order__note" id="checkout-embed-note" style="text-align:center;max-width:60ch;margin:1.2rem auto 0;" role="status" aria-live="polite"></p>
     </div>
   </section>
 
@@ -120,6 +170,6 @@
   <script src="assets/js/cart.js?v=1"></script>
   <script src="assets/js/main.js?v=13"></script>
   <script src="https://js.stripe.com/v3/"></script>
-  <script src="assets/js/embedded-checkout.js?v=4"></script>
+  <script src="assets/js/payment.js?v=1"></script>
 </body>
 </html>
