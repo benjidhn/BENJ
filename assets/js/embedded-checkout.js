@@ -56,7 +56,7 @@ var OWNER_EMAIL = "benji.dhn@gmail.com";
     var errorBox = document.getElementById("checkout-error");
     var recapSection = document.getElementById("commande-recap");
     var paymentSection = document.getElementById("commande-paiement");
-    var embedRoot = document.getElementById("checkout-embed");
+    var embedNote = document.getElementById("checkout-embed-note");
     if (!startBtn) return;
 
     startBtn.addEventListener("click", function () {
@@ -88,18 +88,38 @@ var OWNER_EMAIL = "benji.dhn@gmail.com";
           });
         })
         .then(function (data) {
-          recapSection.hidden = true;
-          paymentSection.hidden = false;
-          setSteps(true);
-          paymentSection.scrollIntoView({ behavior: "smooth", block: "start" });
-
           var stripe = window.Stripe(STRIPE_PUBLISHABLE_KEY);
           return stripe.initEmbeddedCheckout({ clientSecret: data.clientSecret });
         })
         .then(function (checkout) {
-          if (checkout) checkout.mount("#checkout-embed");
+          // On ne bascule vers l'écran de paiement qu'une fois Stripe
+          // prêt — si une erreur survient avant ce point, elle reste
+          // visible sur le récapitulatif (voir le .catch ci-dessous),
+          // jamais cachée derrière un écran resté vide.
+          recapSection.hidden = true;
+          paymentSection.hidden = false;
+          setSteps(true);
+          paymentSection.scrollIntoView({ behavior: "smooth", block: "start" });
+          checkout.mount("#checkout-embed");
+
+          // Filet de sécurité : si l'iframe Stripe n'apparaît toujours
+          // pas après quelques secondes (bloqueur de publicités/
+          // traqueurs le plus souvent), on le signale au lieu de
+          // laisser « Chargement… » tourner indéfiniment sans rien dire.
+          setTimeout(function () {
+            var loaded = document.querySelector("#checkout-embed iframe");
+            if (!loaded && embedNote) {
+              embedNote.textContent = "Le paiement met du temps à s'afficher. Si rien n'apparaît, désactivez votre bloqueur de publicités/traqueurs pour ce site, ou réessayez dans un autre navigateur. Vous pouvez aussi nous écrire directement à " + OWNER_EMAIL + ".";
+              embedNote.className = "order__note";
+            }
+          }, 7000);
         })
         .catch(function (err) {
+          // Toujours revenir sur un état visible et compréhensible,
+          // quel que soit le moment où l'échec s'est produit.
+          recapSection.hidden = false;
+          paymentSection.hidden = true;
+          setSteps(false);
           startBtn.disabled = false;
           startBtn.textContent = "Procéder au paiement sécurisé";
           errorBox.textContent = err.message || "Une erreur est survenue. Merci de réessayer, ou écrivez-nous à " + OWNER_EMAIL + ".";
