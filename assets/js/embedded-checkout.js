@@ -11,7 +11,7 @@
    code du site, contrairement à la clé secrète qui, elle, ne vit
    que côté serveur, dans les variables d'environnement Netlify).
    ------------------------------------------------------------ */
-var STRIPE_PUBLISHABLE_KEY = ""; // ex : "pk_test_51UDSXYRp..."
+var STRIPE_PUBLISHABLE_KEY = "pk_test_51UDSXYRp4H3HB4DwW7GjM06qyKsIm1go8WFM506Yb2YZuUDymMIiCbbERBdXhidw2lCBbjdl4hKiQeL8v1siQY3F00VHwE1ICd"; // ⚠️ clé de TEST — à remplacer par la clé pk_live_... du compte de production avant un vrai lancement
 var OWNER_EMAIL = "benji.dhn@gmail.com";
 
 (function () {
