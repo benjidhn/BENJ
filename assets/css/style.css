@@ -247,6 +247,12 @@ figure{ margin:0; }
 .steps__item.is-done{ color:var(--gold); }
 .steps__num{ width:1.7rem; height:1.7rem; flex:none; border:1px solid currentColor; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--font-serif); font-style:italic; font-size:.8rem; letter-spacing:0; }
 .steps__sep{ width:clamp(1.6rem,3vw,3rem); height:1px; background:var(--line); margin:0 .9rem; }
+@media (max-width:560px){
+  .steps{ flex-wrap:nowrap; gap:0; }
+  .steps__label{ display:none; }
+  .steps__num{ width:1.6rem; height:1.6rem; font-size:.75rem; }
+  .steps__sep{ width:1.6rem; margin:0 .5rem; }
+}
 
 /* ============================================================ COMMANDE (checkout) */
 .checkout-inner{ grid-template-columns:1.5fr 1fr; }
