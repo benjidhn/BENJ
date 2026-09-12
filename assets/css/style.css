@@ -137,11 +137,12 @@ figure{ margin:0; }
 
 .card{ flex:0 0 clamp(230px,26vw,320px); scroll-snap-align:start; background:none; border:0; display:flex; flex-direction:column; cursor:pointer; text-align:center; padding:0; font:inherit; color:inherit; }
 .card:focus-visible{ outline:1px solid var(--gold); outline-offset:6px; }
-.card__visual{ position:relative; aspect-ratio:4/5; overflow:hidden; background:var(--sand-deep); }
+.card__visual{ position:relative; aspect-ratio:1.08/1; overflow:hidden; background:var(--sand-deep); }
 .card__visual img{ width:100%; height:100%; object-fit:cover; transition:transform 1.4s var(--ease); }
 .card:hover .card__visual img{ transform:scale(1.04); }
 .card__num{ position:absolute; top:1.1rem; left:1.1rem; z-index:2; font-family:var(--font-serif); font-style:italic; font-size:.9rem; letter-spacing:.05em; color:rgba(255,255,255,.9); }
-.card__view{ display:none; }
+.card__view{ position:absolute; inset:0; z-index:2; display:flex; align-items:center; justify-content:center; font-size:.62rem; letter-spacing:.32em; text-transform:uppercase; color:#fff; background:rgba(20,16,10,0); opacity:0; transition:opacity .5s var(--ease), background .5s var(--ease); pointer-events:none; }
+.card:hover .card__view{ opacity:1; background:rgba(20,16,10,.26); }
 .card__body{ padding:1.5rem 0 .5rem; }
 .card__name{ font-family:var(--font-serif); font-weight:400; font-size:1.3rem; letter-spacing:.05em; margin:0; display:inline-block; position:relative; }
 .card__name::after{ content:""; position:absolute; left:50%; right:50%; bottom:-.35rem; height:1px; background:var(--gold); transition:left .5s var(--ease), right .5s var(--ease); }
