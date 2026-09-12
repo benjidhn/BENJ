@@ -15,7 +15,7 @@
    ------------------------------------------------------------ */
 var STRIPE_PUBLISHABLE_KEY = "pk_test_51UDSXYRp4H3HB4DwW7GjM06qyKsIm1go8WFM506Yb2YZuUDymMIiCbbERBdXhidw2lCBbjdl4hKiQeL8v1siQY3F00VHwE1ICd"; // ⚠️ clé de TEST — à remplacer par la clé pk_live_... du compte de production avant un vrai lancement
 var OWNER_EMAIL = "benji.dhn@gmail.com";
-var GOOGLE_MAPS_API_KEY = ""; // ex : "AIzaSy..." — active l'auto-complétion d'adresse (facultatif)
+var GOOGLE_MAPS_API_KEY = "AIzaSyBFoN9j6do7SMauKuBhlpHIH8o6paR-0VA"; // clé publique, restreinte par référent HTTP côté Google Cloud
 
 (function () {
   "use strict";
