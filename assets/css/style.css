@@ -133,6 +133,7 @@ figure{ margin:0; }
 .carousel__arrow:disabled{ opacity:.25; cursor:default; }
 
 .carousel{ display:flex; gap:clamp(1rem,2vw,1.6rem); overflow-x:auto; scroll-snap-type:x mandatory; scroll-behavior:smooth; padding:0 max(calc((100vw - var(--wrap))/2), 5vw) 1rem; -webkit-overflow-scrolling:touch; scrollbar-width:none; }
+.carousel--centered{ justify-content:center; }
 .carousel::-webkit-scrollbar{ display:none; }
 
 .card{ flex:0 0 clamp(230px,26vw,320px); scroll-snap-align:start; background:none; border:0; display:flex; flex-direction:column; cursor:pointer; text-align:center; padding:0; font:inherit; color:inherit; }

@@ -269,12 +269,17 @@
     });
     function update() {
       var max = track.scrollWidth - track.clientWidth - 4;
+      // Peu de modèles : la rangée tient dans l'écran, on la centre.
+      // Dès qu'il y en a assez pour défiler, on repasse à l'alignement
+      // gauche (indispensable pour que le défilement reste utilisable).
+      track.classList.toggle("carousel--centered", track.scrollWidth <= track.clientWidth + 2);
       arrows.forEach(function (b) {
         var dir = parseInt(b.getAttribute("data-dir"), 10);
         b.disabled = dir < 0 ? track.scrollLeft <= 4 : track.scrollLeft >= max;
       });
     }
     track.addEventListener("scroll", update, { passive: true });
+    window.addEventListener("resize", update);
     setTimeout(update, 100);
   }
 
