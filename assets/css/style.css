@@ -148,7 +148,8 @@ figure{ margin:0; }
 .card__name::after{ content:""; position:absolute; left:50%; right:50%; bottom:-.35rem; height:1px; background:var(--gold); transition:left .5s var(--ease), right .5s var(--ease); }
 .card:hover .card__name::after{ left:0; right:0; }
 .card__hue{ font-size:.62rem; letter-spacing:.32em; text-transform:uppercase; color:var(--label); margin:.9rem 0 0; }
-.card__words{ display:none; }
+.card__words{ margin:.6rem 0 0; font-family:var(--font-serif); font-style:italic; font-size:.82rem; color:var(--gold); opacity:0; transition:opacity .5s var(--ease); }
+.card:hover .card__words{ opacity:1; }
 
 /* ============================================================ SAVOIR-FAIRE */
 .craft{ padding:clamp(5rem,12vh,9rem) 0; }
