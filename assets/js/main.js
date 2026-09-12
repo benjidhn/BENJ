@@ -11,9 +11,9 @@
   var LOOKBOOK = [
     { src:"front.jpg", alt:"Sahara Sable, face",               cls:"big" },
     { src:"back.jpg",  alt:"Sahara Sable, dos et nœud",        cls:"tall" },
-    { src:"top.jpg",   alt:"Sahara Sable, dessus",             cls:"wide" },
-    { src:"lining.jpg",alt:"Doublure intérieure",              cls:"wide" },
-    { src:"bow.jpg",   alt:"Nœud du lien ajustable",           cls:"" }
+    { src:"bow.jpg",   alt:"Nœud du lien ajustable",           cls:"wide" },
+    { src:"top.jpg",   alt:"Sahara Sable, dessus",             cls:"" },
+    { src:"lining.jpg",alt:"Doublure intérieure",              cls:"" }
   ];
 
   // Grille savoir-faire : gros plans commentés de la confection
