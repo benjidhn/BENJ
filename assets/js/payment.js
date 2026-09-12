@@ -15,6 +15,7 @@
    ------------------------------------------------------------ */
 var STRIPE_PUBLISHABLE_KEY = "pk_test_51UDSXYRp4H3HB4DwW7GjM06qyKsIm1go8WFM506Yb2YZuUDymMIiCbbERBdXhidw2lCBbjdl4hKiQeL8v1siQY3F00VHwE1ICd"; // ⚠️ clé de TEST — à remplacer par la clé pk_live_... du compte de production avant un vrai lancement
 var OWNER_EMAIL = "benji.dhn@gmail.com";
+var GOOGLE_MAPS_API_KEY = ""; // ex : "AIzaSy..." — active l'auto-complétion d'adresse (facultatif)
 
 (function () {
   "use strict";
@@ -104,6 +105,56 @@ var OWNER_EMAIL = "benji.dhn@gmail.com";
         "<span>Total à payer (" + count + (count > 1 ? " pièces" : " pièce") + ")</span>" +
         "<span>" + fmt(window.BENJ_Cart.total()) + "</span>" +
       "</div>";
+  }
+
+  /* ================= Auto-complétion d'adresse (Google Places) ================= */
+  function initAddressAutocomplete() {
+    var input = document.getElementById("c-address");
+    if (!input || !window.google || !window.google.maps || !window.google.maps.places) return;
+
+    var autocomplete = new google.maps.places.Autocomplete(input, {
+      types: ["address"],
+      fields: ["address_components"]
+    });
+
+    autocomplete.addListener("place_changed", function () {
+      var place = autocomplete.getPlace();
+      if (!place || !place.address_components) return;
+
+      function part(type, short) {
+        var comp = place.address_components.filter(function (c) {
+          return c.types.indexOf(type) > -1;
+        })[0];
+        if (!comp) return "";
+        return short ? comp.short_name : comp.long_name;
+      }
+
+      var line1 = (part("street_number") + " " + part("route")).trim();
+      if (line1) input.value = line1;
+
+      var postal = part("postal_code");
+      var city = part("locality") || part("postal_town");
+      var countryCode = part("country", true);
+
+      var postalInput = document.getElementById("c-postal");
+      var cityInput = document.getElementById("c-city");
+      var countrySelect = document.getElementById("c-country");
+      if (postal && postalInput) postalInput.value = postal;
+      if (city && cityInput) cityInput.value = city;
+      if (countryCode && countrySelect) {
+        var opt = countrySelect.querySelector('option[value="' + countryCode + '"]');
+        if (opt) countrySelect.value = countryCode;
+      }
+    });
+  }
+
+  function loadGoogleAddressAutocomplete() {
+    if (!GOOGLE_MAPS_API_KEY || !document.getElementById("c-address")) return;
+    window.benjInitAddressAutocomplete = initAddressAutocomplete;
+    var script = document.createElement("script");
+    script.src = "https://maps.googleapis.com/maps/api/js?key=" + encodeURIComponent(GOOGLE_MAPS_API_KEY) +
+      "&libraries=places&language=fr&region=FR&callback=benjInitAddressAutocomplete";
+    document.head.appendChild(script);
   }
 
   function setSteps(paymentActive) {
@@ -247,6 +298,7 @@ var OWNER_EMAIL = "benji.dhn@gmail.com";
     initShippingForm();
     initPaymentForm();
     initMerci();
+    loadGoogleAddressAutocomplete();
     document.addEventListener("benj:cart-change", renderRecap);
   });
 })();
