@@ -100,6 +100,9 @@ var OWNER_EMAIL = "benji.dhn@gmail.com";
           paymentSection.hidden = false;
           setSteps(true);
           paymentSection.scrollIntoView({ behavior: "smooth", block: "start" });
+          // Stripe exige un conteneur totalement vide avant de s'y monter —
+          // on retire le texte "Chargement…" qui s'y trouvait.
+          document.getElementById("checkout-embed").innerHTML = "";
           checkout.mount("#checkout-embed");
 
           // Filet de sécurité : si l'iframe Stripe n'apparaît toujours
