@@ -248,10 +248,11 @@ figure{ margin:0; }
 .steps__num{ width:1.7rem; height:1.7rem; flex:none; border:1px solid currentColor; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:var(--font-serif); font-style:italic; font-size:.8rem; letter-spacing:0; }
 .steps__sep{ width:clamp(1.6rem,3vw,3rem); height:1px; background:var(--line); margin:0 .9rem; }
 @media (max-width:560px){
-  .steps{ flex-wrap:nowrap; gap:0; }
-  .steps__label{ display:none; }
+  .steps{ flex-wrap:nowrap; gap:0; align-items:flex-start; }
+  .steps__item{ flex-direction:column; gap:.4rem; }
+  .steps__label{ font-size:.52rem; letter-spacing:.14em; }
   .steps__num{ width:1.6rem; height:1.6rem; font-size:.75rem; }
-  .steps__sep{ width:1.6rem; margin:0 .5rem; }
+  .steps__sep{ width:1.6rem; margin:.8rem .4rem 0; }
 }
 
 /* ============================================================ COMMANDE (checkout) */
