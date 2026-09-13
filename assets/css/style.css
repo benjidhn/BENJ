@@ -100,6 +100,7 @@ figure{ margin:0; }
 .hero__slide{ position:absolute; inset:0; background-size:cover; background-position:center 42%; opacity:0; transition:opacity 1.6s var(--ease); transform:scale(1.04); }
 .hero__slide.is-active{ opacity:1; animation:heroZoom 8s ease-out forwards; }
 @keyframes heroZoom{ from{ transform:scale(1.04); } to{ transform:scale(1.12); } }
+.hero__video{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:center 42%; background:var(--sand-deep); }
 .hero__scrim{ position:absolute; inset:0; z-index:1; background:linear-gradient(180deg, rgba(28,22,14,.34) 0%, rgba(28,22,14,0) 26%, rgba(28,22,14,0) 48%, rgba(28,22,14,.5) 100%); }
 .hero__inner{ position:relative; z-index:2; width:min(var(--wrap),90vw); margin:0 auto; padding-bottom:clamp(3.5rem,9vh,7rem); color:#fff; }
 .hero__inner .eyebrow--light{ color:rgba(255,255,255,.85); text-shadow:0 1px 14px rgba(20,15,8,.35); }

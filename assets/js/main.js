@@ -242,9 +242,17 @@
 
   /* ---------- Diaporama du hero (fondu enchaîné) ---------- */
   function initHero() {
+    var reduceMotion = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Vidéo hero : on respecte la préférence "réduire les animations"
+    var video = document.getElementById("hero-video");
+    if (video) {
+      if (reduceMotion) video.pause();
+      return;
+    }
+
     var slides = document.querySelectorAll("#hero-media .hero__slide");
-    if (slides.length < 2) return;
-    if (window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+    if (slides.length < 2 || reduceMotion) return;
     var i = 0;
     setInterval(function () {
       slides[i].classList.remove("is-active");
