@@ -8,14 +8,6 @@
   var IMG_V = "?v=7"; // cache-busting : incrémenter à chaque remplacement de photo
   var PRODUCTS = window.BENJ_PRODUCTS || [];
 
-  // Grille lookbook : les trois coloris de la collection, en mosaïque
-  var LOOKBOOK = [
-    { src:"sable-g3.jpg", alt:"Sahara Sable, dos et nœud",          cls:"big" },
-    { src:"olive-g1.jpg", alt:"Sahara Olive, trois-quarts",         cls:"tall" },
-    { src:"nuit-bow.jpg", alt:"Sahara Nuit, nœud du lien",          cls:"wide" },
-    { src:"olive-g4.jpg", alt:"Sahara Olive, intérieur doublé",     cls:"" },
-    { src:"nuit-g2.jpg",  alt:"Sahara Nuit, détail broderie B.",    cls:"" }
-  ];
 
   // Grille savoir-faire : gros plans commentés de la confection
   var CRAFT = [
@@ -59,21 +51,6 @@
         "</a>"
       );
       grid.appendChild(card);
-    });
-  }
-
-  /* ---------- Lookbook ---------- */
-  function buildLookbook() {
-    var grid = document.getElementById("lookbook-grid");
-    if (!grid) return;
-    LOOKBOOK.forEach(function (item, i) {
-      var b = el(
-        '<button class="lb-item ' + item.cls + ' reveal" style="transition-delay:' + (i * 40) + 'ms" aria-label="Agrandir : ' + item.alt + '">' +
-          '<img src="' + IMG + item.src + IMG_V + '" alt="' + item.alt + '" loading="lazy" />' +
-        "</button>"
-      );
-      b.addEventListener("click", function () { openImage(item.src, item.alt); });
-      grid.appendChild(b);
     });
   }
 
@@ -366,7 +343,6 @@
   document.addEventListener("DOMContentLoaded", function () {
     buildCollection();
     buildCraft();
-    buildLookbook();
     initReveal();
     initNav();
     initHero();
