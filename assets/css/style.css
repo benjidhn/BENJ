@@ -95,7 +95,7 @@ figure{ margin:0; }
 .menu.open .menu__nav a:nth-child(4){ transition-delay:.31s; }
 
 /* ============================================================ HERO */
-.hero{ position:relative; height:100svh; min-height:600px; overflow:hidden; display:flex; align-items:flex-end; }
+.hero{ position:relative; height:72vh; min-height:440px; max-height:760px; overflow:hidden; display:flex; align-items:flex-end; }
 .hero__media{ position:absolute; inset:0; z-index:0; background:var(--sand-deep); }
 .hero__slide{ position:absolute; inset:0; background-size:cover; background-position:center 42%; opacity:0; transition:opacity 1.6s var(--ease); transform:scale(1.04); }
 .hero__slide.is-active{ opacity:1; animation:heroZoom 8s ease-out forwards; }
