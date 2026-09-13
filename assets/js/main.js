@@ -5,7 +5,7 @@
   "use strict";
 
   var IMG = "assets/img/";
-  var IMG_V = "?v=3"; // cache-busting : incrémenter à chaque remplacement de photo
+  var IMG_V = "?v=4"; // cache-busting : incrémenter à chaque remplacement de photo
   var PRODUCTS = window.BENJ_PRODUCTS || [];
 
   // Grille lookbook : image + classe de mise en page (masonry)
