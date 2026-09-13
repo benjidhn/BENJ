@@ -284,6 +284,9 @@ figure{ margin:0; }
 .foot__nav a:hover{ color:var(--cream); }
 .foot__copy{ font-size:.66rem; letter-spacing:.16em; color:#8a7f6b; }
 
+/* ============================================================ FICHE PRODUIT (page) */
+.pd{ padding-bottom:clamp(5rem,12vh,9rem); }
+
 /* ============================================================ LIGHTBOX / VUE PRODUIT */
 .lb{ position:fixed; inset:0; z-index:200; background:rgba(20,16,10,.9); backdrop-filter:blur(8px); display:flex; align-items:flex-start; justify-content:center; padding:clamp(.8rem,3vw,2.4rem); opacity:0; visibility:hidden; transition:opacity .4s var(--ease), visibility .4s; overflow-y:auto; }
 .lb.open{ opacity:1; visibility:visible; }
@@ -337,12 +340,15 @@ figure{ margin:0; }
 .lb__acc-body{ padding:0 0 1.3rem; font-size:.86rem; line-height:1.75; color:var(--ink-soft); }
 .lb__acc-body p{ margin:0 0 .6rem; }
 .lb__acc-body p:last-child{ margin-bottom:0; }
-#lb-order{ display:inline-block; margin-top:1.6rem; }
+#lb-order, #pd-order{ display:inline-block; margin-top:1.6rem; }
 
-/* Vue image seule (lookbook) : pas de panneau info */
+/* Vue image seule (lookbook / savoir-faire) : pas de panneau info, juste une légende */
 .lb__panel.is-single{ max-width:760px; }
-.lb__panel.is-single .lb__info{ display:none; }
 .lb__panel.is-single .lb__stage{ aspect-ratio:auto; height:min(74vh,640px); }
+.lb__caption{ text-align:center; font-family:var(--font-serif); font-style:italic; color:var(--gold); font-size:1rem; padding:1.2rem 1.5rem 1.6rem; margin:0; }
+
+/* Fiche produit en page à part entière (produit.html) : pas de fond sombre, hauteur libre */
+.lb__panel.is-page{ margin:0 auto; transform:none; box-shadow:0 30px 80px -45px rgba(20,16,10,.3); }
 
 @media (min-width:841px){
   .lb__panel{ display:grid; grid-template-columns:1.15fr 1fr; height:min(86vh,760px); }
@@ -351,6 +357,10 @@ figure{ margin:0; }
   .lb__info{ height:100%; overflow-y:auto; }
   .lb__panel.is-single{ display:block; height:auto; }
   .lb__panel.is-single .lb__gallery{ display:block; height:auto; }
+  .lb__panel.is-page{ height:auto; }
+  .lb__panel.is-page .lb__gallery{ display:block; height:auto; }
+  .lb__panel.is-page .lb__stage{ flex:none; aspect-ratio:1/1; }
+  .lb__panel.is-page .lb__info{ height:auto; overflow-y:visible; }
 }
 
 /* ============================================================ REVEAL */

@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Contact — BENJ. Medical Couture</title>
-  <meta name="description" content="Contacter la maison BENJ. — pièces en édition limitée, commandes et cadeaux sur mesure." />
+  <title>Calot — BENJ. Medical Couture</title>
+  <meta name="description" content="Calot de chirurgie BENJ. Medical Couture — Collection Sahara, édition limitée." />
   <meta name="theme-color" content="#f6f2ea" />
 
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -41,40 +41,62 @@
     </nav>
   </div>
 
-  <!-- ░░ CONTACT ░░ -->
-  <section class="order subpage-first" id="commande">
-    <div class="wrap order__inner">
-      <div class="order__intro reveal">
-        <p class="eyebrow">Sur rendez-vous</p>
-        <h2 class="section-title">Prendre contact.</h2>
-        <p class="lede">Édition limitée. Laissez-nous vos coordonnées, nous revenons vers vous.</p>
-      </div>
+  <!-- ░░ FICHE PRODUIT ░░ -->
+  <section class="pd subpage-first" id="produit">
+    <div class="wrap">
+      <a href="index.html#collection" class="link" style="display:inline-block;margin-bottom:2.4rem;">&larr; Retour à la collection</a>
 
-      <form class="order__form reveal" id="order-form" novalidate>
-        <div class="field">
-          <label for="f-name">Nom</label>
-          <input id="f-name" name="name" type="text" autocomplete="name" required />
+      <div class="lb__panel is-page" id="pd-panel">
+        <div class="lb__gallery">
+          <div class="lb__stage" id="pd-stage"><!-- injecté par JS --></div>
+          <button type="button" class="lb__arrow lb__arrow--prev" id="pd-prev" aria-label="Image précédente">&larr;</button>
+          <button type="button" class="lb__arrow lb__arrow--next" id="pd-next" aria-label="Image suivante">&rarr;</button>
+          <div class="lb__dots" id="pd-dots"><!-- injecté par JS --></div>
         </div>
-        <div class="field">
-          <label for="f-email">Email</label>
-          <input id="f-email" name="email" type="email" autocomplete="email" required />
+
+        <div class="lb__info">
+          <header class="lb__head">
+            <p class="lb__num" id="pd-num"></p>
+            <h1 class="lb__name" id="pd-name"></h1>
+            <p class="lb__words" id="pd-words"></p>
+          </header>
+          <p class="lb__price" id="pd-price"></p>
+
+          <div class="lb__colors">
+            <p class="lb__colors-label">Coloris</p>
+            <div class="lb__swatches" id="pd-swatches"><!-- injecté par JS --></div>
+          </div>
+
+          <div class="lb__buy">
+            <div class="qty__group">
+              <button type="button" class="qty__btn" id="pd-qty-dec" aria-label="Retirer une unité">&minus;</button>
+              <input type="text" inputmode="numeric" id="pd-qty" class="qty__val" value="1" aria-label="Quantité" />
+              <button type="button" class="qty__btn" id="pd-qty-inc" aria-label="Ajouter une unité">+</button>
+            </div>
+            <button type="button" class="btn btn--dark" id="pd-add">Ajouter au panier</button>
+          </div>
+          <p class="lb__added" id="pd-added" role="status" aria-live="polite"></p>
+
+          <div class="lb__accordions">
+            <details class="lb__acc">
+              <summary>Matière &amp; entretien</summary>
+              <div class="lb__acc-body">
+                <p id="pd-material"></p>
+                <p id="pd-care"></p>
+              </div>
+            </details>
+            <details class="lb__acc">
+              <summary>Édition &amp; livraison</summary>
+              <div class="lb__acc-body">
+                <p id="pd-edition"></p>
+                <p>Chaque pièce voyage dans son écrin signature — livraison suivie et soignée.</p>
+              </div>
+            </details>
+          </div>
+
+          <a href="contact.html" class="link" id="pd-order">Une demande particulière ? Nous contacter</a>
         </div>
-        <div class="field field--full">
-          <label for="f-model">Modèle souhaité</label>
-          <select id="f-model" name="model">
-            <option value="">Sans préférence</option>
-            <option>01 · Sahara Sable — Léopard sable</option>
-            <option>02 · Sahara Olive — Léopard olive</option>
-            <option>03 · Sahara Nuit — Léopard nocturne</option>
-          </select>
-        </div>
-        <div class="field field--full">
-          <label for="f-msg">Votre message</label>
-          <textarea id="f-msg" name="message" rows="4" placeholder="Un cadeau, une gravure, une occasion particulière…"></textarea>
-        </div>
-        <button type="submit" class="btn btn--dark btn--block">Envoyer la demande</button>
-        <p class="order__note" id="order-note" role="status" aria-live="polite"></p>
-      </form>
+      </div>
     </div>
   </section>
 

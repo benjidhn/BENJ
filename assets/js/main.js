@@ -42,7 +42,7 @@
     PRODUCTS.forEach(function (p, i) {
       var main = p.id + ".jpg";
       var card = el(
-        '<button class="card" aria-label="Voir ' + p.name + '">' +
+        '<a class="card" href="produit.html?id=' + p.id + '" aria-label="Voir ' + p.name + '">' +
           '<div class="card__visual">' +
             '<span class="card__num">' + p.num + "</span>" +
             '<span class="card__view">Voir le modèle</span>' +
@@ -53,9 +53,8 @@
             '<p class="card__hue">' + p.hue + "</p>" +
             '<p class="card__words">' + p.words + "</p>" +
           "</div>" +
-        "</button>"
+        "</a>"
       );
-      card.addEventListener("click", function () { openLightbox(p); });
       grid.appendChild(card);
     });
   }
@@ -93,12 +92,9 @@
     });
   }
 
-  /* ---------- Lightbox / vue produit (façon maison de luxe) ---------- */
+  /* ---------- Lightbox (aperçu lookbook/savoir-faire — une image) ---------- */
   var lb = document.getElementById("lightbox");
-  var lbPanel = document.getElementById("lb-panel");
   var lastFocus = null;
-  var lbImages = [];
-  var lbIndex = 0;
 
   function lbShow() {
     lb.classList.add("open");
@@ -114,137 +110,124 @@
     if (lastFocus) lastFocus.focus();
   }
 
-  // Galerie : une image affichée à la fois, navigation par flèches/puces
-  function renderStage() {
-    var stage = document.getElementById("lb-stage");
-    if (!stage || !lbImages.length) return;
-    var g = lbImages[lbIndex];
-    stage.innerHTML = '<img src="' + IMG + g.src + IMG_V + '" alt="' + g.alt + '" />';
-    stage.parentNode.querySelectorAll(".lb__dot").forEach(function (d, i) {
-      d.classList.toggle("is-active", i === lbIndex);
-    });
-  }
-  function renderDots() {
-    var dots = document.getElementById("lb-dots");
-    var multi = lbImages.length > 1;
-    if (dots) {
-      dots.style.display = multi ? "" : "none";
-      dots.innerHTML = lbImages.map(function (g, i) {
-        return '<button type="button" class="lb__dot' + (i === 0 ? " is-active" : "") + '" data-i="' + i + '" aria-label="Voir la vue ' + (i + 1) + '"></button>';
-      }).join("");
-      dots.querySelectorAll(".lb__dot").forEach(function (d) {
-        d.addEventListener("click", function () { lbIndex = parseInt(d.getAttribute("data-i"), 10) || 0; renderStage(); });
-      });
-    }
-    document.querySelectorAll("#lb-prev, #lb-next").forEach(function (a) { a.style.display = multi ? "" : "none"; });
-  }
-  function gotoImage(delta) {
-    if (lbImages.length < 2) return;
-    lbIndex = (lbIndex + delta + lbImages.length) % lbImages.length;
-    renderStage();
-  }
-
-  // Coloris : vignettes cliquables pour changer de modèle sans fermer la vue
-  function renderSwatches(activeId) {
-    var wrap = document.getElementById("lb-swatches");
-    if (!wrap) return;
-    wrap.innerHTML = PRODUCTS.map(function (prod) {
-      return '<button type="button" class="lb__swatch' + (prod.id === activeId ? " is-active" : "") + '" data-id="' + prod.id + '" aria-label="' + prod.name + '"><img src="' + IMG + prod.id + ".jpg" + IMG_V + '" alt="" /></button>';
-    }).join("");
-    wrap.querySelectorAll(".lb__swatch").forEach(function (btn) {
-      btn.addEventListener("click", function () {
-        var prod = window.BENJ_findProduct(btn.getAttribute("data-id"));
-        if (prod) openLightbox(prod);
-      });
-    });
-  }
-
-  // Vue produit : galerie + fiche (prix, coloris, quantité, entretien…)
-  function openLightbox(p) {
-    lastFocus = document.activeElement;
-    if (lbPanel) lbPanel.classList.remove("is-single");
-    var info = document.getElementById("lb-info");
-    if (info) info.style.display = "";
-
-    lbImages = galleryFor(p);
-    lbIndex = 0;
-
-    document.getElementById("lb-num").textContent = "N° " + p.num + " — Édition I";
-    document.getElementById("lb-name").textContent = p.name;
-    document.getElementById("lb-words").textContent = p.words;
-    var lbOrder = document.getElementById("lb-order");
-    if (lbOrder) lbOrder.href = "contact.html?modele=" + encodeURIComponent(p.name);
-    var lbPrice = document.getElementById("lb-price");
-    if (lbPrice) lbPrice.textContent = window.BENJ_formatPrice(p.price);
-    var lbQty = document.getElementById("lb-qty");
-    var lbAdded = document.getElementById("lb-added");
-    if (lbQty) lbQty.value = "1";
-    if (lbAdded) lbAdded.textContent = "";
-    var lbEdition = document.getElementById("lb-edition");
-    var lbMaterial = document.getElementById("lb-material");
-    var lbCare = document.getElementById("lb-care");
-    if (lbEdition) lbEdition.textContent = window.BENJ_EDITION || "";
-    if (lbMaterial) lbMaterial.textContent = window.BENJ_MATERIAL || "";
-    if (lbCare) lbCare.textContent = window.BENJ_CARE || "";
-
-    renderStage();
-    renderDots();
-    renderSwatches(p.id);
-
-    var lbAdd = document.getElementById("lb-add");
-    if (lbAdd) {
-      lbAdd.onclick = function () {
-        var qty = parseInt((lbQty && lbQty.value) || "1", 10) || 1;
-        window.BENJ_Cart.add(p.id, qty);
-        if (lbAdded) lbAdded.textContent = qty + " × " + p.name + " ajouté" + (qty > 1 ? "s" : "") + " au panier.";
-      };
-    }
-    lbShow();
-  }
-
-  // Aperçu d'une image seule (lookbook) : galerie sans fiche produit
+  // Aperçu d'une image seule (lookbook / savoir-faire)
   function openImage(src, alt) {
     lastFocus = document.activeElement;
-    if (lbPanel) lbPanel.classList.add("is-single");
-    var info = document.getElementById("lb-info");
-    if (info) info.style.display = "none";
-    lbImages = [{ src: src, alt: alt }];
-    lbIndex = 0;
-    document.getElementById("lb-num").textContent = "Lookbook";
-    document.getElementById("lb-name").textContent = "Collection Sahara";
-    document.getElementById("lb-words").textContent = alt;
-    renderStage();
-    renderDots();
+    document.getElementById("lb-stage").innerHTML = '<img src="' + IMG + src + IMG_V + '" alt="' + alt + '" />';
+    var caption = document.getElementById("lb-caption");
+    if (caption) caption.textContent = alt;
     lbShow();
   }
 
   if (lb) {
     document.getElementById("lb-close").addEventListener("click", closeLightbox);
     lb.addEventListener("click", function (e) { if (e.target === lb) closeLightbox(); });
-    var lbPrevBtn = document.getElementById("lb-prev");
-    var lbNextBtn = document.getElementById("lb-next");
-    if (lbPrevBtn) lbPrevBtn.addEventListener("click", function () { gotoImage(-1); });
-    if (lbNextBtn) lbNextBtn.addEventListener("click", function () { gotoImage(1); });
     document.addEventListener("keydown", function (e) {
-      if (!lb.classList.contains("open")) return;
-      if (e.key === "Escape") closeLightbox();
-      else if (e.key === "ArrowLeft") gotoImage(-1);
-      else if (e.key === "ArrowRight") gotoImage(1);
+      if (e.key === "Escape" && lb.classList.contains("open")) closeLightbox();
     });
   }
 
-  /* ---------- Sélecteur de quantité (lightbox) ---------- */
-  function initLightboxQty() {
-    var qtyInput = document.getElementById("lb-qty");
-    var dec = document.getElementById("lb-qty-dec");
-    var inc = document.getElementById("lb-qty-inc");
-    if (!qtyInput) return;
-    dec && dec.addEventListener("click", function () {
-      qtyInput.value = Math.max(1, (parseInt(qtyInput.value, 10) || 1) - 1);
+  /* ---------- Fiche produit en page à part entière (produit.html) ---------- */
+  function initProductPage() {
+    var stage = document.getElementById("pd-stage");
+    if (!stage) return; // pas sur cette page
+
+    var images = [];
+    var index = 0;
+
+    function render() {
+      if (!images.length) return;
+      var g = images[index];
+      stage.innerHTML = '<img src="' + IMG + g.src + IMG_V + '" alt="' + g.alt + '" />';
+      document.querySelectorAll("#pd-dots .lb__dot").forEach(function (d, i) {
+        d.classList.toggle("is-active", i === index);
+      });
+    }
+    function renderDots() {
+      var dots = document.getElementById("pd-dots");
+      var multi = images.length > 1;
+      if (dots) {
+        dots.style.display = multi ? "" : "none";
+        dots.innerHTML = images.map(function (g, i) {
+          return '<button type="button" class="lb__dot' + (i === 0 ? " is-active" : "") + '" data-i="' + i + '" aria-label="Voir la vue ' + (i + 1) + '"></button>';
+        }).join("");
+        dots.querySelectorAll(".lb__dot").forEach(function (d) {
+          d.addEventListener("click", function () { index = parseInt(d.getAttribute("data-i"), 10) || 0; render(); });
+        });
+      }
+      document.querySelectorAll("#pd-prev, #pd-next").forEach(function (a) { a.style.display = multi ? "" : "none"; });
+    }
+    function gotoImage(delta) {
+      if (images.length < 2) return;
+      index = (index + delta + images.length) % images.length;
+      render();
+    }
+
+    function renderSwatches(activeId) {
+      var wrap = document.getElementById("pd-swatches");
+      if (!wrap) return;
+      wrap.innerHTML = PRODUCTS.map(function (prod) {
+        return '<a class="lb__swatch' + (prod.id === activeId ? " is-active" : "") + '" href="produit.html?id=' + prod.id + '" aria-label="' + prod.name + '"><img src="' + IMG + prod.id + ".jpg" + IMG_V + '" alt="" /></a>';
+      }).join("");
+    }
+
+    function load(p) {
+      images = galleryFor(p);
+      index = 0;
+      document.title = p.name + " — BENJ. Medical Couture";
+      document.getElementById("pd-num").textContent = "N° " + p.num + " — Édition I";
+      document.getElementById("pd-name").textContent = p.name;
+      document.getElementById("pd-words").textContent = p.words;
+      document.getElementById("pd-price").textContent = window.BENJ_formatPrice(p.price);
+      document.getElementById("pd-material").textContent = window.BENJ_MATERIAL || "";
+      document.getElementById("pd-care").textContent = window.BENJ_CARE || "";
+      document.getElementById("pd-edition").textContent = window.BENJ_EDITION || "";
+      var order = document.getElementById("pd-order");
+      if (order) order.href = "contact.html?modele=" + encodeURIComponent(p.name);
+      var qty = document.getElementById("pd-qty");
+      var added = document.getElementById("pd-added");
+      if (qty) qty.value = "1";
+      if (added) added.textContent = "";
+
+      render();
+      renderDots();
+      renderSwatches(p.id);
+
+      var addBtn = document.getElementById("pd-add");
+      if (addBtn) {
+        addBtn.onclick = function () {
+          var q = parseInt((qty && qty.value) || "1", 10) || 1;
+          window.BENJ_Cart.add(p.id, q);
+          if (added) added.textContent = q + " × " + p.name + " ajouté" + (q > 1 ? "s" : "") + " au panier.";
+        };
+      }
+    }
+
+    var id = new URLSearchParams(location.search).get("id");
+    var product = window.BENJ_findProduct(id) || PRODUCTS[0];
+    if (!product) return;
+    load(product);
+
+    var prevBtn = document.getElementById("pd-prev");
+    var nextBtn = document.getElementById("pd-next");
+    if (prevBtn) prevBtn.addEventListener("click", function () { gotoImage(-1); });
+    if (nextBtn) nextBtn.addEventListener("click", function () { gotoImage(1); });
+    document.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft") gotoImage(-1);
+      else if (e.key === "ArrowRight") gotoImage(1);
     });
-    inc && inc.addEventListener("click", function () {
-      qtyInput.value = (parseInt(qtyInput.value, 10) || 1) + 1;
-    });
+
+    var qtyInput = document.getElementById("pd-qty");
+    var dec = document.getElementById("pd-qty-dec");
+    var inc = document.getElementById("pd-qty-inc");
+    if (qtyInput) {
+      dec && dec.addEventListener("click", function () {
+        qtyInput.value = Math.max(1, (parseInt(qtyInput.value, 10) || 1) - 1);
+      });
+      inc && inc.addEventListener("click", function () {
+        qtyInput.value = (parseInt(qtyInput.value, 10) || 1) + 1;
+      });
+    }
   }
 
   /* ---------- Révélation au scroll ---------- */
@@ -387,6 +370,6 @@
     initCarousel();
     initForm();
     initModelParam();
-    initLightboxQty();
+    initProductPage();
   });
 })();
