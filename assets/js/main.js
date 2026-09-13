@@ -5,7 +5,7 @@
   "use strict";
 
   var IMG = "assets/img/";
-  var IMG_V = "?v=5"; // cache-busting : incrémenter à chaque remplacement de photo
+  var IMG_V = "?v=6"; // cache-busting : incrémenter à chaque remplacement de photo
   var PRODUCTS = window.BENJ_PRODUCTS || [];
 
   // Grille lookbook : image + classe de mise en page (masonry)
@@ -25,32 +25,15 @@
 
   function el(html) { var t = document.createElement("template"); t.innerHTML = html.trim(); return t.content.firstChild; }
 
-  // Galerie produit : vues disponibles par coloris (le nombre et le contenu
-  // peuvent différer d'un modèle à l'autre selon les photos disponibles).
-  var GALLERY_VIEWS = {
-    sable: [
-      { n: "g1", alt: "trois-quarts" },
-      { n: "g2", alt: "vue arrière et nœud" },
-      { n: "g3", alt: "profil" },
-      { n: "g4", alt: "vue de dessus" },
-      { n: "g5", alt: "intérieur doublé" }
-    ],
-    olive: [
-      { n: "g1", alt: "trois-quarts" },
-      { n: "g2", alt: "détail broderie B." },
-      { n: "g3", alt: "dos et nœud" },
-      { n: "g4", alt: "intérieur doublé" }
-    ],
-    nuit: [
-      { n: "g1", alt: "trois-quarts" },
-      { n: "g2", alt: "détail broderie B." },
-      { n: "g3", alt: "dos et nœud" },
-      { n: "g4", alt: "intérieur doublé" }
-    ]
-  };
+  // Galerie produit : mêmes 4 vues pour chaque coloris (présentation symétrique)
+  var GALLERY_VIEWS = [
+    { n: "g1", alt: "trois-quarts" },
+    { n: "g2", alt: "détail broderie B." },
+    { n: "g3", alt: "dos et nœud" },
+    { n: "g4", alt: "intérieur doublé" }
+  ];
   function galleryFor(p) {
-    var views = GALLERY_VIEWS[p.id] || GALLERY_VIEWS.sable;
-    return views.map(function (v) {
+    return GALLERY_VIEWS.map(function (v) {
       return { src: p.id + "-" + v.n + ".jpg", alt: p.name + " — " + v.alt };
     });
   }
