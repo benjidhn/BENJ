@@ -5,16 +5,16 @@
   "use strict";
 
   var IMG = "assets/img/";
-  var IMG_V = "?v=6"; // cache-busting : incrémenter à chaque remplacement de photo
+  var IMG_V = "?v=7"; // cache-busting : incrémenter à chaque remplacement de photo
   var PRODUCTS = window.BENJ_PRODUCTS || [];
 
-  // Grille lookbook : image + classe de mise en page (masonry)
+  // Grille lookbook : les trois coloris de la collection, en mosaïque
   var LOOKBOOK = [
-    { src:"back.jpg",  alt:"Sahara Sable, dos et nœud",        cls:"big" },
-    { src:"front.jpg", alt:"Sahara Sable, face",               cls:"tall" },
-    { src:"bow.jpg",   alt:"Nœud du lien ajustable",           cls:"wide" },
-    { src:"top.jpg",   alt:"Sahara Sable, dessus",             cls:"" },
-    { src:"lining.jpg",alt:"Doublure intérieure",              cls:"" }
+    { src:"sable-g3.jpg", alt:"Sahara Sable, dos et nœud",          cls:"big" },
+    { src:"olive-g1.jpg", alt:"Sahara Olive, trois-quarts",         cls:"tall" },
+    { src:"nuit-bow.jpg", alt:"Sahara Nuit, nœud du lien",          cls:"wide" },
+    { src:"olive-g4.jpg", alt:"Sahara Olive, intérieur doublé",     cls:"" },
+    { src:"nuit-g2.jpg",  alt:"Sahara Nuit, détail broderie B.",    cls:"" }
   ];
 
   // Grille savoir-faire : gros plans commentés de la confection
