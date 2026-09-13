@@ -14,7 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500;6..96,600&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="assets/css/style.css?v=21" />
+  <link rel="stylesheet" href="assets/css/style.css?v=22" />
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Crect width='100' height='100' fill='%23272219'/%3E%3Ctext x='50' y='68' font-family='Georgia,serif' font-size='54' fill='%23c6a15b' text-anchor='middle'%3EB%3C/text%3E%3C/svg%3E" />
 </head>
 <body>
@@ -158,18 +158,29 @@
     </div>
   </footer>
 
-  <!-- ░░ LIGHTBOX (vue produit) ░░ -->
+  <!-- ░░ LIGHTBOX (vue produit — présentation façon maison de luxe) ░░ -->
   <div class="lb" id="lightbox" aria-hidden="true" role="dialog" aria-modal="true" aria-label="Aperçu produit">
     <button class="lb__close" id="lb-close" aria-label="Fermer">&times;</button>
-    <div class="lb__panel">
-      <header class="lb__head">
-        <p class="lb__num" id="lb-num"></p>
-        <h3 class="lb__name" id="lb-name"></h3>
-        <p class="lb__words" id="lb-words"></p>
-      </header>
-      <div class="pv-grid" id="lb-grid"><!-- injecté par JS --></div>
-      <footer class="lb__foot">
+    <div class="lb__panel" id="lb-panel">
+      <div class="lb__gallery">
+        <div class="lb__stage" id="lb-stage"><!-- injecté par JS --></div>
+        <button type="button" class="lb__arrow lb__arrow--prev" id="lb-prev" aria-label="Image précédente">&larr;</button>
+        <button type="button" class="lb__arrow lb__arrow--next" id="lb-next" aria-label="Image suivante">&rarr;</button>
+        <div class="lb__dots" id="lb-dots"><!-- injecté par JS --></div>
+      </div>
+      <div class="lb__info" id="lb-info">
+        <header class="lb__head">
+          <p class="lb__num" id="lb-num"></p>
+          <h3 class="lb__name" id="lb-name"></h3>
+          <p class="lb__words" id="lb-words"></p>
+        </header>
         <p class="lb__price" id="lb-price"></p>
+
+        <div class="lb__colors">
+          <p class="lb__colors-label">Coloris</p>
+          <div class="lb__swatches" id="lb-swatches"><!-- injecté par JS --></div>
+        </div>
+
         <div class="lb__buy">
           <div class="qty__group">
             <button type="button" class="qty__btn" id="lb-qty-dec" aria-label="Retirer une unité">&minus;</button>
@@ -179,18 +190,31 @@
           <button type="button" class="btn btn--dark" id="lb-add">Ajouter au panier</button>
         </div>
         <p class="lb__added" id="lb-added" role="status" aria-live="polite"></p>
-        <dl class="lb__specs">
-          <div><dt>Édition</dt><dd id="lb-edition"></dd></div>
-          <div><dt>Matière</dt><dd id="lb-material"></dd></div>
-          <div><dt>Entretien</dt><dd id="lb-care"></dd></div>
-        </dl>
+
+        <div class="lb__accordions">
+          <details class="lb__acc">
+            <summary>Matière &amp; entretien</summary>
+            <div class="lb__acc-body">
+              <p id="lb-material"></p>
+              <p id="lb-care"></p>
+            </div>
+          </details>
+          <details class="lb__acc">
+            <summary>Édition &amp; livraison</summary>
+            <div class="lb__acc-body">
+              <p id="lb-edition"></p>
+              <p>Chaque pièce voyage dans son écrin signature — livraison suivie et soignée.</p>
+            </div>
+          </details>
+        </div>
+
         <a href="contact.html" class="link" id="lb-order">Une demande particulière ? Nous contacter</a>
-      </footer>
+      </div>
     </div>
   </div>
 
   <script src="assets/js/products.js?v=2"></script>
   <script src="assets/js/cart.js?v=1"></script>
-  <script src="assets/js/main.js?v=15"></script>
+  <script src="assets/js/main.js?v=16"></script>
 </body>
 </html>
